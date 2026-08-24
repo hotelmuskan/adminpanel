@@ -1,0 +1,2524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#0d0d0d" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>Hotel Muskan | Black & Gold Premium Dine-In</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            muskan: {
+              50: '#faf8f0', 100: '#f5f0dc', 200: '#ebe0b8', 300: '#d4c48a',
+              400: '#c9a84c', 500: '#b8943a', 600: '#9a7a2e', 700: '#7a6125',
+              800: '#1a1a1a', 900: '#0d0d0d', 950: '#000000',
+            },
+            gold: {
+              300: '#f5e6a3', 400: '#e8d48b', 500: '#d4af37', 600: '#c9a227', 700: '#a8841f',
+            }
+          },
+          fontFamily: {
+            display: ['Playfair Display', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --gold: #d4af37;
+      --black: #0a0a0a;
+      --white: #ffffff;
+    }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      overscroll-behavior: none;
+      background: var(--black) !important;
+      color: var(--white) !important;
+    }
+    #app {
+      background: var(--black) !important;
+      color: var(--white) !important;
+    }
+    .font-display { font-family: 'Playfair Display', serif; }
+    
+    .bottom-nav {
+      padding-bottom: calc(12px + var(--safe-bottom));
+      background: #000 !important;
+      border-top: 1px solid rgba(212,175,55,0.4) !important;
+    }
+    .floating-cart {
+      bottom: calc(80px + var(--safe-bottom));
+    }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .status-timeline::before {
+      content: '';
+      position: absolute;
+      left: 15px;
+      top: 24px;
+      bottom: 24px;
+      width: 2px;
+      background: #e5e7eb;
+    }
+
+    /* 3D Thali Scene */
+    .thali-scene {
+      perspective: 900px;
+      perspective-origin: 50% 40%;
+    }
+    .thali-plate-3d {
+      width: 280px;
+      height: 280px;
+      margin: 0 auto;
+      position: relative;
+      border-radius: 50%;
+      transform-style: preserve-3d;
+      transform: rotateX(28deg) rotateZ(0deg);
+      background: radial-gradient(circle at 50% 42%, #f5e6c8 0%, #e8d4a8 25%, #d4b87a 45%, #c4a060 60%, #a88848 75%, #8a6e38 88%, #6b5428 100%);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.45), 0 10px 20px rgba(0,0,0,0.3), inset 0 -8px 20px rgba(0,0,0,0.15), inset 0 8px 16px rgba(255,255,255,0.35), 0 0 0 4px #c9a227, 0 0 0 7px #8a6e38, 0 0 0 10px #d4af37;
+      animation: thaliFloat 4s ease-in-out infinite;
+    }
+    @keyframes thaliFloat {
+      0%, 100% { transform: rotateX(28deg) translateY(0); }
+      50% { transform: rotateX(28deg) translateY(-6px); }
+    }
+    .compartment-3d {
+      position: absolute;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #fff9f0, #f0e4c8);
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.12), 0 3px 8px rgba(0,0,0,0.2), 0 0 0 1.5px rgba(168, 136, 72, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transform: translateZ(12px);
+      overflow: hidden;
+    }
+    .compartment-3d.filled {
+      transform: translateZ(18px) scale(1.08);
+      box-shadow: inset 0 2px 6px rgba(0,0,0,0.1), 0 6px 14px rgba(0,0,0,0.25), 0 0 0 2px #d4af37;
+    }
+    .thali-center-3d {
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 68px; height: 68px;
+      margin: -34px 0 0 -34px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 40% 35%, #fff9f0, #e8d9b0);
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.25), 0 0 0 2px rgba(168, 136, 72, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      transform: translateZ(20px);
+      z-index: 5;
+      overflow: hidden;
+    }
+    .thali-center-3d.filled {
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.1), 0 6px 16px rgba(0,0,0,0.3), 0 0 0 2.5px #d4af37;
+    }
+
+    input, textarea, select {
+      background: #1a1a1a !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(212,175,55,0.4) !important;
+    }
+    input::placeholder, textarea::placeholder {
+      color: rgba(255,255,255,0.35) !important;
+    }
+
+    html, body, #app, #main-content, #main-content *, 
+    main, main *, p, span, div, a, li, label, td, th, button {
+      color: #ffffff !important;
+    }
+
+    h1, h2, h3, h4, .font-display, [class*="font-display"], .text-gold {
+      color: #d4af37 !important;
+    }
+    .font-bold {
+      color: #f0d78c !important;
+    }
+
+    button.bg-yellow-500, button.bg-gold-500, [class*="bg-gold-500"],
+    button[class*="bg-[#d4af37]"], #floating-cart, #floating-cart * {
+      background: var(--gold) !important;
+      color: #000000 !important;
+      font-weight: 700 !important;
+    }
+
+    .receipt-paper {
+      background: #fffef8 !important;
+      color: #000 !important;
+      font-family: 'Courier New', Courier, monospace;
+    }
+    .receipt-paper * {
+      color: #000 !important;
+    }
+
+    .loader-ring {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(212, 175, 55, 0.2);
+      border-radius: 50%;
+      border-top-color: #d4af37;
+      animation: spin 1s ease-in-out infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body class="bg-black text-white antialiased">
+
+  <!-- Hidden container for background bill image generation -->
+  <div id="hidden-receipt-render" style="position:fixed;left:-9999px;top:-9999px;width:340px;z-index:-10;"></div>
+
+  <!-- ================= 1. PAGE LOADING / SPLASH SCREEN ================= -->
+  <div id="loading-screen" class="fixed inset-0 bg-neutral-950 z-[200] flex flex-col items-center justify-between p-8 transition-opacity duration-700">
+    <div></div>
+    <div class="text-center flex flex-col items-center">
+      <div class="w-24 h-24 rounded-full border-2 border-gold-500/60 overflow-hidden mb-6 shadow-2xl shadow-gold-500/20 bg-black flex items-center justify-center relative">
+        <img src="https://cdn.phototourl.com/free/2026-08-24-76c7de73-66c4-4937-a9c7-58275ece61ca.jpg" alt="Hotel Muskan Building" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=400&fit=crop';" />
+      </div>
+      <div class="text-[10px] tracking-[0.3em] uppercase text-yellow-400/80 mb-1">Fine Dine · Est. 1998</div>
+      <h1 class="font-display text-4xl font-bold text-yellow-400 tracking-wide mb-2">HOTEL MUSKAN</h1>
+      <p class="text-xs text-stone-400 max-w-xs">Bhagwanpur, Vaishali, Bihar</p>
+      
+      <div class="mt-10 flex flex-col items-center gap-3">
+        <div class="loader-ring"></div>
+        <div class="text-[11px] text-yellow-400/70 tracking-widest uppercase">Preparing Your Table...</div>
+      </div>
+    </div>
+    <div class="text-[10px] text-stone-600 tracking-wider uppercase">Premium Table Service System</div>
+  </div>
+
+  <!-- ================= 2. FULLSCREEN LOGIN SCREEN ================= -->
+  <div id="login-screen" class="fixed inset-0 bg-neutral-950 z-[150] hidden flex-col justify-between p-6 max-w-md mx-auto overflow-y-auto">
+    <div class="pt-8 text-center">
+      <div class="w-20 h-20 mx-auto rounded-2xl overflow-hidden border border-gold-500/40 mb-3 shadow-lg bg-neutral-900 flex items-center justify-center">
+        <img src="https://cdn.phototourl.com/free/2026-08-24-76c7de73-66c4-4937-a9c7-58275ece61ca.jpg" alt="Hotel Muskan" class="w-full h-full object-cover" />
+      </div>
+      <h2 class="font-display text-2xl font-bold text-yellow-400">Welcome to Muskan</h2>
+      <p class="text-xs text-stone-400 mt-1">Direct Instant Login</p>
+    </div>
+
+    <div class="bg-neutral-900 border border-gold-500/30 rounded-3xl p-6 my-auto shadow-2xl">
+      <div class="space-y-4 mb-6">
+        <div>
+          <label class="block text-[11px] font-bold text-yellow-400 uppercase tracking-wider mb-1.5">Your Name</label>
+          <input type="text" id="initial-login-name" placeholder="e.g. Rahul Sharma" 
+                 class="w-full text-sm px-4 py-3 rounded-2xl focus:outline-none" />
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-yellow-400 uppercase tracking-wider mb-1.5">Mobile Number</label>
+          <input type="tel" id="initial-login-phone" placeholder="e.g. 9876543210" maxlength="10" 
+                 class="w-full text-sm px-4 py-3 rounded-2xl focus:outline-none" />
+          <p class="text-[10px] text-stone-400 mt-1.5">✓ Used for personal bills & order tracking.</p>
+        </div>
+      </div>
+
+      <button onclick="App.submitInitialLogin()" class="w-full bg-gold-500 text-black py-3.5 rounded-2xl font-bold text-sm shadow-xl active:scale-95 transition">
+        Enter Restaurant ➔
+      </button>
+
+      <button onclick="App.skipLogin()" class="w-full text-center text-xs text-stone-400 py-3 mt-1 hover:text-white">
+        Continue as Guest
+      </button>
+    </div>
+
+    <div class="text-center text-[11px] text-stone-500 pb-4">
+      Hotel Muskan · Bhagwanpur
+    </div>
+  </div>
+
+  <!-- ================= 3. MAIN RESTAURANT APP ================= -->
+  <div id="app" class="min-h-screen max-w-md mx-auto bg-neutral-950 relative shadow-2xl border border-gold-500/20 overflow-hidden hidden">
+    
+    <!-- Top Header Bar -->
+    <div id="lang-bar" class="fixed top-0 left-0 right-0 z-50 max-w-md mx-auto flex justify-between items-center p-3 pointer-events-none">
+      <button onclick="App.simulateQR()" class="pointer-events-auto bg-neutral-900/90 backdrop-blur-sm text-xs font-semibold px-3 py-1.5 rounded-full shadow-md border border-gold-500/40 flex items-center gap-1">
+        📍 <span id="table-display-pill">TABLE-12</span>
+      </button>
+      <div class="flex items-center gap-2 pointer-events-auto">
+        <button id="user-profile-btn" onclick="App.openLoginModal()" class="bg-neutral-900/90 backdrop-blur-sm text-xs font-medium px-3 py-1.5 rounded-full shadow-md border border-gold-500/40 flex items-center gap-1">
+          👤 <span id="user-display-name">Login</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main id="main-content" class="pb-28">
+      <!-- Injected Screens -->
+    </main>
+
+    <!-- Floating Cart -->
+    <button id="floating-cart" class="floating-cart fixed left-1/2 -translate-x-1/2 z-40 hidden items-center gap-3 bg-gold-500 px-5 py-3 rounded-full shadow-xl shadow-gold-500/30 active:scale-95 transition-transform">
+      <span class="relative">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span id="cart-badge" class="absolute -top-2 -right-2 bg-black text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center">0</span>
+      </span>
+      <div class="text-left">
+        <div class="text-xs opacity-80">View Cart</div>
+        <div id="cart-total" class="font-semibold text-sm">₹0</div>
+      </div>
+    </button>
+
+    <!-- Bottom Nav -->
+    <nav class="bottom-nav fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-black border-t border-yellow-500/40 z-50 flex justify-around items-center pt-2">
+      <button data-screen="home" class="nav-btn flex flex-col items-center gap-0.5 py-1 px-3">
+        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span class="text-[10px] font-medium">Home</span>
+      </button>
+      <button data-screen="thali" class="nav-btn flex flex-col items-center gap-0.5 py-1 px-3" style="color:rgba(255,255,255,0.4)">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/><circle cx="12" cy="12" r="9" stroke-width="2"/></svg>
+        <span class="text-[10px] font-medium">Thali</span>
+      </button>
+      <button data-screen="menu" class="nav-btn flex flex-col items-center gap-0.5 py-1 px-3" style="color:rgba(255,255,255,0.4)">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        <span class="text-[10px] font-medium">Menu</span>
+      </button>
+      <button data-screen="myorders" class="nav-btn flex flex-col items-center gap-0.5 py-1 px-3" style="color:rgba(255,255,255,0.4)">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/></svg>
+        <span class="text-[10px] font-medium">Orders</span>
+      </button>
+      <button data-screen="cart" class="nav-btn flex flex-col items-center gap-0.5 py-1 px-3" style="color:rgba(255,255,255,0.4)">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span class="text-[10px] font-medium">Cart</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Modal Container -->
+  <div id="modal-container" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[110] hidden items-center justify-center p-4 overflow-y-auto"></div>
+
+  <!-- Toast -->
+  <div id="toast" class="fixed top-16 left-1/2 -translate-x-1/2 z-[100] max-w-sm w-full px-4 hidden">
+    <div class="bg-neutral-900 text-yellow-400 border border-gold-500/30 text-sm font-medium px-4 py-3 rounded-xl shadow-lg text-center"></div>
+  </div>
+
+  <!-- ================= FIRESTORE INTEGRATION ================= -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhZl84pL0CER7OtmR-8RIgrXJMILB59JM",
+      authDomain: "hoteloowner.firebaseapp.com",
+      projectId: "hoteloowner",
+      storageBucket: "hoteloowner.firebasestorage.app",
+      messagingSenderId: "299586039524",
+      appId: "1:299586039524:web:c67bd4b2cee14d041706f1"
+    };
+
+    const fbApp = initializeApp(firebaseConfig);
+    const db = getFirestore(fbApp);
+
+    window.pushOrderToFirestore = async function(order) {
+      try {
+        await addDoc(collection(db, "orders"), {
+          tableNumber: order.table,
+          customerName: order.customerName || "",
+          phone: order.customerPhone || "",
+          items: (order.items || []).map(function(i) {
+            return { name: i.name, qty: i.qty, price: i.price };
+          }),
+          total: order.total,
+          status: "new",
+          createdAt: serverTimestamp()
+        });
+        console.log("Order saved to Firestore successfully!");
+      } catch (e) {
+        console.error("Firestore order push failed:", e);
+      }
+    };
+  </script>
+
+  <script>
+  // ========== DATA.JS ==========
+  const UPI_VPA = "ajaykumar2569563@ybl";
+  const UPI_NAME = "Hotel Muskan";
+
+  const TABLES = Array.from({ length: 20 }, (_, i) => ({
+    id: `TABLE-${String(i + 1).padStart(2, "0")}`,
+    status: i === 11 ? "ordering" : "available"
+  }));
+
+  let CURRENT_TABLE = "TABLE-12";
+
+  const DEFAULT_MENU = [
+    { id: "m1", name: "Shahi Paneer", desc: "Rich royal paneer in creamy gravy", price: 260, halfPrice: 130, cat: "paneer", veg: true, rating: 4.9, orders: 980, badge: "🔥 Bestseller", spice: 2, available: true, img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop" },
+    { id: "m2", name: "Mattar Paneer", desc: "Paneer with green peas in tomato gravy", price: 220, halfPrice: 110, cat: "paneer", veg: true, rating: 4.7, orders: 720, badge: null, spice: 2, available: true, img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop" },
+    { id: "m3", name: "Paneer Do Pyaza", desc: "Paneer cooked with double onions", price: 240, halfPrice: 120, cat: "paneer", veg: true, rating: 4.6, orders: 540, badge: null, spice: 2, available: true, img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=300&fit=crop" },
+    { id: "m4", name: "Paneer Masala", desc: "Spiced paneer curry", price: 240, halfPrice: 120, cat: "paneer", veg: true, rating: 4.7, orders: 610, badge: null, spice: 3, available: true, img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop" },
+    { id: "m5", name: "Paneer Chilli", desc: "Indo-Chinese spicy paneer", price: 240, halfPrice: 120, cat: "paneer", veg: true, rating: 4.5, orders: 480, badge: "🌶 Spicy", spice: 4, available: true, img: "https://images.unsplash.com/photo-1563379926898-05f4575a45d8?w=400&h=300&fit=crop" },
+    { id: "m6", name: "Palak Paneer", desc: "Paneer in spinach gravy", price: 180, halfPrice: 90, cat: "paneer", veg: true, rating: 4.6, orders: 550, badge: null, spice: 1, available: true, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=400&h=300&fit=crop" },
+    { id: "m7", name: "Chicken Do Pyaza", desc: "Chicken with double onions", price: 260, halfPrice: 130, cat: "nonveg", veg: false, rating: 4.8, orders: 890, badge: "🔥 Bestseller", spice: 3, available: true, img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&h=300&fit=crop" },
+    { id: "m8", name: "Chicken Curry", desc: "Home-style chicken curry — unique Muskan taste", price: 180, halfPrice: 90, cat: "nonveg", veg: false, rating: 4.9, orders: 1100, badge: "👑 Chef Special", spice: 3, available: true, img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&h=300&fit=crop" },
+    { id: "m9", name: "Fish Curry", desc: "Fresh fish in traditional gravy", price: 160, halfPrice: 80, cat: "nonveg", veg: false, rating: 4.5, orders: 320, badge: null, spice: 3, available: true, img: "https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?w=400&h=300&fit=crop" },
+    { id: "m10", name: "Egg Curry", desc: "Boiled eggs in spicy gravy", price: 120, halfPrice: 60, cat: "nonveg", veg: false, rating: 4.4, orders: 410, badge: null, spice: 3, available: true, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&h=300&fit=crop" },
+    { id: "m11", name: "Omelette Curry", desc: "Omelette pieces in curry", price: 160, halfPrice: 80, cat: "nonveg", veg: false, rating: 4.3, orders: 280, badge: null, spice: 2, available: true, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=400&h=300&fit=crop" },
+    { id: "m12", name: "Plain Rice", desc: "Steamed basmati rice", price: 70, halfPrice: 40, cat: "rice", veg: true, rating: 4.5, orders: 1500, badge: null, spice: 0, available: true, img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&h=300&fit=crop" },
+    { id: "m13", name: "Jeera Rice", desc: "Cumin tempered rice", price: 80, halfPrice: 40, cat: "rice", veg: true, rating: 4.6, orders: 980, badge: null, spice: 0, available: true, img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&h=300&fit=crop" },
+    { id: "m14", name: "Sada Khana", desc: "Simple rice plate", price: 70, halfPrice: null, cat: "rice", veg: true, rating: 4.4, orders: 600, badge: null, spice: 0, available: true, img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400&h=300&fit=crop" },
+    { id: "m15", name: "Plain Roti", desc: "Fresh tawa roti", price: 6, halfPrice: null, cat: "bread", veg: true, rating: 4.7, orders: 5000, badge: null, spice: 0, available: true, img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=300&fit=crop" },
+    { id: "m16", name: "Butter Roti", desc: "Roti with butter — guest favourite", price: 12, halfPrice: null, cat: "bread", veg: true, rating: 4.9, orders: 4200, badge: "⭐ Highly Rated", spice: 0, available: true, img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=400&h=300&fit=crop" },
+    { id: "m17", name: "Special Tea", desc: "Hotel Muskan special chai", price: 10, halfPrice: null, cat: "beverages", veg: true, rating: 4.8, orders: 3000, badge: null, spice: 0, available: true, img: "https://images.unsplash.com/photo-1571934811356-5cc061b6821f?w=400&h=300&fit=crop" },
+    { id: "m18", name: "Mineral Water", desc: "Bottled water", price: 20, halfPrice: null, cat: "beverages", veg: true, rating: 4.5, orders: 2000, badge: null, spice: 0, available: true, img: "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?w=400&h=300&fit=crop" },
+    { id: "m19", name: "Cold Drink", desc: "Soft drink", price: 40, halfPrice: null, cat: "beverages", veg: true, rating: 4.4, orders: 1800, badge: null, spice: 0, available: true, img: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=400&h=300&fit=crop" }
+  ];
+
+  function getDynamicMenu() {
+    try {
+      const stored = localStorage.getItem("muskan_custom_menu");
+      return stored ? JSON.parse(stored) : DEFAULT_MENU;
+    } catch (e) {
+      return DEFAULT_MENU;
+    }
+  }
+
+  let MENU = getDynamicMenu();
+
+  const DEFAULT_THALI_OPTIONS = {
+    rice: [
+      { id: "t-rice1", name: "Steamed Rice", price: 40, cal: 180, emoji: "🍚", available: true, img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&h=200&fit=crop" },
+      { id: "t-rice2", name: "Jeera Rice", price: 60, cal: 210, emoji: "🍚", available: true, img: "https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=200&h=200&fit=crop" },
+      { id: "t-rice3", name: "Veg Pulao", price: 80, cal: 250, emoji: "🍚", available: true, img: "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?w=200&h=200&fit=crop" }
+    ],
+    bread: [
+      { id: "t-bread1", name: "Tandoori Roti (2)", price: 40, cal: 160, emoji: "🫓", available: true, img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200&h=200&fit=crop" },
+      { id: "t-bread2", name: "Butter Naan (1)", price: 50, cal: 220, emoji: "🫓", available: true, img: "https://images.unsplash.com/photo-1601050690597-df0568f70950?w=200&h=200&fit=crop" },
+      { id: "t-bread3", name: "Lachha Paratha (1)", price: 55, cal: 280, emoji: "🫓", available: true, img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200&h=200&fit=crop" }
+    ],
+    dal: [
+      { id: "t-dal1", name: "Dal Tadka", price: 50, cal: 140, emoji: "🥣", available: true, img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=200&h=200&fit=crop" },
+      { id: "t-dal2", name: "Dal Fry", price: 55, cal: 160, emoji: "🥣", available: true, img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=200&h=200&fit=crop" },
+      { id: "t-dal3", name: "Dal Makhani", price: 70, cal: 220, emoji: "🥣", available: true, img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=200&h=200&fit=crop" }
+    ],
+    sabzi: [
+      { id: "t-sab1", name: "Mix Veg", price: 60, cal: 120, emoji: "🥗", available: true, img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200&h=200&fit=crop" },
+      { id: "t-sab2", name: "Aloo Gobi", price: 55, cal: 140, emoji: "🥔", available: true, img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200&h=200&fit=crop" },
+      { id: "t-sab3", name: "Seasonal Sabzi", price: 65, cal: 110, emoji: "🥬", available: true, img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200&h=200&fit=crop" }
+    ],
+    protein: [
+      { id: "t-pro1", name: "Paneer Butter Masala", price: 90, cal: 280, emoji: "🧀", veg: true, available: true, img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=200&h=200&fit=crop" },
+      { id: "t-pro2", name: "Shahi Paneer", price: 95, cal: 300, emoji: "🧀", veg: true, available: true, img: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=200&h=200&fit=crop" },
+      { id: "t-pro3", name: "Chicken Curry", price: 110, cal: 320, emoji: "🍗", veg: false, available: true, img: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=200&h=200&fit=crop" },
+      { id: "t-pro4", name: "Egg Curry", price: 70, cal: 240, emoji: "🥚", veg: false, available: true, img: "https://images.unsplash.com/photo-1525351484163-7529414344d8?w=200&h=200&fit=crop" }
+    ],
+    sides: [
+      { id: "t-side1", name: "Green Salad", price: 30, cal: 40, emoji: "🥗", available: true, img: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=200&h=200&fit=crop" },
+      { id: "t-side2", name: "Boondi Raita", price: 40, cal: 90, emoji: "🥛", available: true, img: "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=200&h=200&fit=crop" },
+      { id: "t-side3", name: "Papad", price: 20, cal: 50, emoji: "🍘", available: true, img: "https://images.unsplash.com/photo-1565557623262-b51c2513a641?w=200&h=200&fit=crop" },
+      { id: "t-side4", name: "Pickle", price: 15, cal: 20, emoji: "🫙", available: true, img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=200&h=200&fit=crop" }
+    ],
+    dessert: [
+      { id: "t-des1", name: "Gulab Jamun (1)", price: 40, cal: 150, emoji: "🍮", available: true, img: "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?w=200&h=200&fit=crop" },
+      { id: "t-des2", name: "Ice Cream", price: 50, cal: 180, emoji: "🍦", available: true, img: "https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=200&h=200&fit=crop" },
+      { id: "t-des3", name: "None", price: 0, cal: 0, emoji: "—", available: true, img: "" }
+    ]
+  };
+
+  function getDynamicThaliOptions() {
+    try {
+      const stored = localStorage.getItem("muskan_custom_thali_options");
+      return stored ? JSON.parse(stored) : DEFAULT_THALI_OPTIONS;
+    } catch (e) {
+      return DEFAULT_THALI_OPTIONS;
+    }
+  }
+
+  let THALI_OPTIONS = getDynamicThaliOptions();
+
+  const THALI_PRESETS = [
+    { id: "preset-student", name: "Student Thali", price: 149, items: ["t-rice1", "t-bread1", "t-dal1", "t-sab1", "t-side1"], emoji: "🎓" },
+    { id: "preset-family", name: "Family Thali", price: 399, items: ["t-rice2", "t-bread2", "t-dal3", "t-sab1", "t-pro1", "t-side2", "t-des1"], emoji: "👨‍👩‍👧‍👦" },
+    { id: "preset-veg", name: "Premium Veg", price: 279, items: ["t-rice3", "t-bread2", "t-dal3", "t-sab3", "t-pro1", "t-side2", "t-des1"], emoji: "🥦" },
+    { id: "preset-nonveg", name: "Non-Veg Special", price: 349, items: ["t-rice2", "t-bread2", "t-dal2", "t-sab1", "t-pro3", "t-side2", "t-des1"], emoji: "🍗" },
+    { id: "preset-budget", name: "Budget Thali", price: 129, items: ["t-rice1", "t-bread1", "t-dal1", "t-sab2", "t-side3"], emoji: "💰" },
+    { id: "preset-chef", name: "Chef Special", price: 329, items: ["t-rice3", "t-bread3", "t-dal3", "t-sab3", "t-pro2", "t-side2", "t-des2"], emoji: "👨‍🍳" }
+  ];
+
+  // ========== APP CORE ==========
+  (function () {
+    "use strict";
+
+    let state = {
+      screen: "home",
+      adminTab: "orders",
+      cart: [],
+      cookingNotes: '',
+      tipAmount: 0,
+      adminOrderSearch: '',
+      thali: { rice: null, bread: null, dal: null, sabzi: null, protein: null, sides: [], dessert: null },
+      order: null,
+      orderStatus: 0,
+      paymentMethod: null,
+      table: CURRENT_TABLE,
+      searchQuery: '',
+      activeFilter: 'all',
+      customerPhone: localStorage.getItem('muskan_user_phone') || '',
+      customerName: localStorage.getItem('muskan_user_name') || ''
+    };
+
+    const STATUS_LABELS = [
+      { label: "Order Placed", icon: "🛒" },
+      { label: "Accepted by Kitchen", icon: "👨‍🍳" },
+      { label: "Preparing", icon: "🔥" },
+      { label: "Ready", icon: "🍽" },
+      { label: "Coming to Table", icon: "🚶" },
+      { label: "Served", icon: "✅" }
+    ];
+
+    function loadOrders() {
+      try { return JSON.parse(localStorage.getItem("muskan_orders") || "[]"); } 
+      catch (e) { return []; }
+    }
+
+    function saveOrder(order) {
+      var list = loadOrders();
+      list.unshift(order);
+      if (list.length > 500) list = list.slice(0, 500);
+      localStorage.setItem("muskan_orders", JSON.stringify(list));
+      return list;
+    }
+
+    function updateStoredOrder(id, patch) {
+      var list = loadOrders();
+      list = list.map(function(o) {
+        if (o.id === id) { for (var k in patch) o[k] = patch[k]; }
+        return o;
+      });
+      localStorage.setItem("muskan_orders", JSON.stringify(list));
+      return list;
+    }
+
+    function loadServiceRequests() {
+      try { return JSON.parse(localStorage.getItem("muskan_service_requests") || "[]"); }
+      catch (e) { return []; }
+    }
+
+    function saveServiceRequest(req) {
+      var list = loadServiceRequests();
+      list.unshift(req);
+      if (list.length > 50) list = list.slice(0, 50);
+      localStorage.setItem("muskan_service_requests", JSON.stringify(list));
+      return list;
+    }
+
+    function triggerAdminNotification(title, bodyText) {
+      if ("Notification" in window) {
+        if (Notification.permission === "granted") {
+          new Notification(title, {
+            body: bodyText,
+            icon: "https://cdn.phototourl.com/free/2026-08-24-76c7de73-66c4-4937-a9c7-58275ece61ca.jpg"
+          });
+        } else if (Notification.permission !== "denied") {
+          Notification.requestPermission().then(function(perm) {
+            if (perm === "granted") {
+              new Notification(title, {
+                body: bodyText,
+                icon: "https://cdn.phototourl.com/free/2026-08-24-76c7de73-66c4-4937-a9c7-58275ece61ca.jpg"
+              });
+            }
+          });
+        }
+      }
+      if ("vibrate" in navigator) {
+        try { navigator.vibrate([200, 100, 200]); } catch(e) {}
+      }
+    }
+
+    function saveMenuData(newMenu) {
+      MENU = newMenu;
+      localStorage.setItem("muskan_custom_menu", JSON.stringify(MENU));
+    }
+
+    function saveThaliData(newThaliOptions) {
+      THALI_OPTIONS = newThaliOptions;
+      localStorage.setItem("muskan_custom_thali_options", JSON.stringify(THALI_OPTIONS));
+    }
+
+    function formatPrice(n) { return "₹" + n; }
+
+    function buildUpiUrl(amount) {
+      var am = (amount != null && amount > 0) ? Number(amount).toFixed(2) : "";
+      var tn = encodeURIComponent("Hotel Muskan " + (state.table || "Order"));
+      var pn = encodeURIComponent(UPI_NAME);
+      var pa = UPI_VPA;
+      var q = "pa=" + encodeURIComponent(pa) + "&pn=" + pn + "&cu=INR&tn=" + tn;
+      if (am) q += "&am=" + am;
+      return {
+        pa: pa,
+        amount: am,
+        upi: "upi://pay?" + q,
+        gpay: "tez://upi/pay?" + q,
+        phonepe: "phonepe://pay?" + q,
+        paytm: "paytmmp://pay?" + q,
+        navi: "intent://pay?" + q + "#Intent;scheme=upi;package=com.navi.finance;end"
+      };
+    }
+
+    function upiQrImageUrl(amount, size) {
+      size = size || 220;
+      var links = buildUpiUrl(amount);
+      return "https://api.qrserver.com/v1/create-qr-code/?size=" + size + "x" + size + "&margin=8&data=" + encodeURIComponent(links.upi);
+    }
+
+    function tryOpenSpecificUpi(method, amount) {
+      var links = buildUpiUrl(amount);
+      showToast("Opening Payment App...");
+      var targetUrl = links.upi;
+      if (method === "gpay") targetUrl = links.gpay;
+      else if (method === "phonepe") targetUrl = links.phonepe;
+      else if (method === "paytm") targetUrl = links.paytm;
+      else if (method === "navi") targetUrl = links.navi;
+
+      var a = document.createElement("a");
+      a.href = targetUrl;
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function() { try { document.body.removeChild(a); } catch(e) {} }, 500);
+      return links;
+    }
+
+    function showToast(msg) {
+      const el = document.getElementById("toast");
+      el.querySelector("div").textContent = msg;
+      el.classList.remove("hidden");
+      setTimeout(() => el.classList.add("hidden"), 2500);
+    }
+
+    function cartCount() { return state.cart.reduce((s, i) => s + i.qty, 0); }
+    function cartSubtotal() { return state.cart.reduce((s, i) => s + i.price * i.qty, 0); }
+    
+    function cartTotal() {
+      let sub = cartSubtotal();
+      let total = sub + (state.tipAmount || 0);
+      return Math.max(0, total);
+    }
+
+    function thaliTotal() {
+      let total = 0;
+      let cal = 0;
+      ["rice", "bread", "dal", "sabzi", "protein", "dessert"].forEach(k => {
+        if (state.thali[k]) { total += state.thali[k].price; cal += state.thali[k].cal || 0; }
+      });
+      state.thali.sides.forEach(s => { total += s.price; cal += s.cal || 0; });
+      return { total, cal };
+    }
+
+    function updateCartUI() {
+      const btn = document.getElementById("floating-cart");
+      const badge = document.getElementById("cart-badge");
+      const totalEl = document.getElementById("cart-total");
+      const count = cartCount();
+      if (count > 0) {
+        btn.classList.remove("hidden");
+        btn.classList.add("flex");
+        badge.textContent = count;
+        totalEl.textContent = formatPrice(cartTotal());
+      } else {
+        btn.classList.add("hidden");
+        btn.classList.remove("flex");
+      }
+    }
+
+    function updateProfileUI() {
+      const el = document.getElementById("user-display-name");
+      if (state.customerPhone) {
+        el.textContent = state.customerName ? state.customerName.split(" ")[0] : state.customerPhone.slice(-4);
+      } else {
+        el.textContent = "Login";
+      }
+    }
+
+    function setActiveNav(screen) {
+      document.querySelectorAll(".nav-btn").forEach(btn => {
+        const isActive = btn.dataset.screen === screen;
+        btn.style.color = isActive ? "#d4af37" : "rgba(255,255,255,0.4)";
+      });
+    }
+
+    function createReceiptHtml(o) {
+      return `
+        <div class="receipt-paper p-5 rounded-lg text-xs shadow-2xl" style="background:#fffef8;color:#000;font-family:'Courier New',Courier,monospace;">
+          <div style="text-align:center;font-weight:bold;font-size:15px;margin-bottom:4px">HOTEL MUSKAN</div>
+          <div style="text-align:center;font-size:10px;margin-bottom:8px">Bhagwanpur, Vaishali, Bihar · +91 96086 35670</div>
+          <div style="border-bottom:1px dashed #000;margin:8px 0"></div>
+          <div style="display:flex;justify-content:space-between"><span>Bill No: ${o.id}</span><span>Table: ${o.table}</span></div>
+          <div style="display:flex;justify-content:space-between"><span>Guest: ${o.customerName || 'Customer'}</span><span>Phone: ${o.customerPhone || 'N/A'}</span></div>
+          <div style="display:flex;justify-content:space-between"><span>Date: ${o.time || 'Today'}</span><span>Mode: ${(o.payment||'CASH').toUpperCase()}</span></div>
+          ${o.notes ? `<div style="font-size:10px;margin-top:2px;color:#444">Note: <i>${o.notes}</i></div>` : ''}
+          <div style="border-bottom:1px dashed #000;margin:8px 0"></div>
+          <div style="display:flex;flex-direction:column;gap:4px">
+            ${(o.items || []).map(it => `
+              <div style="display:flex;justify-content:space-between">
+                <span>${it.qty}x ${it.name.substring(0, 18)}</span>
+                <span>₹${it.price * it.qty}</span>
+              </div>
+            `).join('')}
+          </div>
+          <div style="border-bottom:1px dashed #000;margin:8px 0"></div>
+          ${o.tip ? `<div style="display:flex;justify-content:space-between"><span>Staff Tip:</span><span>+₹${o.tip}</span></div>` : ''}
+          <div style="display:flex;justify-content:space-between;font-weight:bold;font-size:14px;margin-top:4px"><span>Total Amount:</span><span>₹${o.total}</span></div>
+          <div style="text-align:center;font-size:10px;margin-top:14px">Thank You! Visit Hotel Muskan Again!</div>
+        </div>
+      `;
+    }
+
+    function buildBillText(order) {
+      var text = "✨ *HOTEL MUSKAN - OFFICIAL BILL* ✨\n";
+      text += "📍 Bhagwanpur, Vaishali, Bihar\n";
+      text += "📞 +91 96086 35670\n";
+      text += "👤 *Guest:* " + (order.customerName || "Customer") + " (" + (order.customerPhone || "N/A") + ")\n";
+      text += "---------------------------------\n";
+      text += "🧾 *Bill No:* " + order.id + "\n";
+      text += "🪑 *Table:* " + order.table + "\n";
+      text += "⏰ *Time:* " + (order.time || "Today") + "\n";
+      text += "💳 *Payment:* " + (order.payment || "PAID").toUpperCase() + "\n";
+      if (order.notes) text += "📝 *Instructions:* " + order.notes + "\n";
+      text += "---------------------------------\n";
+      text += "*ITEMS:*\n";
+      (order.items || []).forEach(function(it) {
+        text += "▪ " + (it.qty || 1) + "x " + it.name + " = ₹" + ((it.price || 0) * (it.qty || 1)) + "\n";
+      });
+      text += "---------------------------------\n";
+      if (order.tip) text += "❤️ *Tip:* +₹" + order.tip + "\n";
+      text += "💰 *Total Amount:* ₹" + order.total + "\n\n";
+      text += "🙏 *Thank you! Visit Hotel Muskan Again!*";
+      return text;
+    }
+
+    async function sendBillWithImageToWhatsApp(order) {
+      if (!order) return;
+      showToast("Preparing Bill Image & Text...");
+
+      const renderContainer = document.getElementById("hidden-receipt-render");
+      renderContainer.innerHTML = createReceiptHtml(order);
+
+      try {
+        const canvas = await html2canvas(renderContainer.firstElementChild, { scale: 2, backgroundColor: "#fffef8" });
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+        const file = new File([blob], `Hotel_Muskan_Bill_${order.id}.png`, { type: 'image/png' });
+        const shareText = buildBillText(order);
+
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: `Hotel Muskan Bill ${order.id}`,
+            text: shareText
+          });
+          showToast("Bill shared with Image!");
+        } else {
+          var link = document.createElement("a");
+          link.download = file.name;
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+
+          var cleanPhone = (order.customerPhone || state.customerPhone || "").replace(/[^0-9]/g, "");
+          if (cleanPhone.length === 10) cleanPhone = "91" + cleanPhone;
+          var waUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(shareText);
+          if (cleanPhone.length >= 10) {
+            waUrl = "https://api.whatsapp.com/send?phone=" + cleanPhone + "&text=" + encodeURIComponent(shareText);
+          }
+          window.open(waUrl, "_blank");
+          showToast("Bill image saved! Select it in WhatsApp chat.");
+        }
+      } catch (err) {
+        console.error(err);
+        showToast("Opening WhatsApp...");
+        var cleanPhone = (order.customerPhone || state.customerPhone || "").replace(/[^0-9]/g, "");
+        if (cleanPhone.length === 10) cleanPhone = "91" + cleanPhone;
+        var waUrl = "https://api.whatsapp.com/send?text=" + encodeURIComponent(buildBillText(order));
+        if (cleanPhone.length >= 10) waUrl = "https://api.whatsapp.com/send?phone=" + cleanPhone + "&text=" + encodeURIComponent(buildBillText(order));
+        window.open(waUrl, "_blank");
+      }
+    }
+
+    // ========== RENDERERS ==========
+    function renderHome() {
+      const bestsellers = MENU.filter(m => m.badge).slice(0, 4);
+      return `
+        <div class="relative">
+          <div class="relative h-72 overflow-hidden bg-neutral-900">
+            <img src="https://cdn.phototourl.com/free/2026-08-24-76c7de73-66c4-4937-a9c7-58275ece61ca.jpg" alt="Hotel Muskan Building"
+                 class="absolute inset-0 w-full h-full object-cover" 
+                 onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&fit=crop';" />
+            <div class="absolute inset-0" style="background:linear-gradient(to top, #0a0a0a 0%, rgba(0,0,0,0.5) 50%, rgba(0,0,0,0.3) 100%)"></div>
+            <div class="relative z-10 h-full flex flex-col justify-end p-5">
+              <div class="text-[10px] tracking-[0.25em] uppercase mb-1" style="color:#d4af37">Est. 1998</div>
+              <h1 class="font-display text-3xl font-bold" style="color:#d4af37">Hotel Muskan</h1>
+              <p class="text-sm mt-1" style="color:rgba(255,255,255,0.85)">
+                ${state.customerPhone ? `Welcome, <b class="text-yellow-400">${state.customerName || state.customerPhone}</b>` : 'Bhagwanpur, Bihar'}
+              </p>
+              <div class="flex flex-wrap gap-2 mt-4">
+                <button onclick="App.navigate('menu')" class="font-bold text-sm px-5 py-2.5 rounded-full" style="background:#d4af37;color:#000">Menu</button>
+                <button onclick="App.navigate('thali')" class="font-semibold text-sm px-5 py-2.5 rounded-full border border-yellow-500" style="color:#d4af37">Build Thali</button>
+              </div>
+              <div class="flex flex-wrap gap-2 mt-3">
+                <button onclick="App.randomThali()" class="text-[11px] px-3 py-1.5 rounded-full border border-yellow-500/40" style="color:#d4af37">🎲 Surprise Thali</button>
+                <button onclick="App.requestWaiter()" class="text-[11px] px-3 py-1.5 rounded-full border border-yellow-500/40" style="color:#d4af37">🙋 Call Waiter</button>
+                <button onclick="App.requestWater()" class="text-[11px] px-3 py-1.5 rounded-full border border-yellow-500/40" style="color:#d4af37">💧 Water</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="px-4 mt-4">
+            <div class="rounded-2xl p-4 border border-yellow-500/30 bg-neutral-900">
+              <div class="flex justify-between items-center text-sm">
+                <div>
+                  <div style="color:#d4af37;font-size:10px;text-transform:uppercase">Direct Line</div>
+                  <a href="tel:+919608635670" style="color:#fff;font-weight:600">+91 96086 35670</a>
+                </div>
+                <div class="text-right">
+                  <div style="color:#d4af37;font-size:10px;text-transform:uppercase">Customer Portal</div>
+                  <div class="text-xs text-yellow-400">${state.customerPhone ? '🟢 Active' : '⚪ Guest'}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 px-4 pb-8">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="font-display text-lg font-semibold" style="color:#d4af37">Popular Dishes</h2>
+              <button onclick="App.navigate('menu')" class="text-xs" style="color:#d4af37">Full menu</button>
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              ${bestsellers.map(item => foodCard(item)).join("")}
+            </div>
+            <button onclick="App.openAdmin()" class="mt-8 w-full text-[10px] py-2" style="color:rgba(255,255,255,0.25)">⚙ Staff Admin</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function foodCard(item) {
+      const isUnavailable = item.available === false;
+      return `
+        <div class="bg-neutral-900 rounded-2xl border border-gold-500/20 overflow-hidden shadow-sm flex flex-col justify-between ${isUnavailable ? 'opacity-50 grayscale' : ''}">
+          <div>
+            <div class="h-28 bg-neutral-900 relative overflow-hidden">
+              <img src="${item.img}" alt="${item.name}" class="w-full h-full object-cover" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+              <div class="hidden absolute inset-0 items-center justify-center text-4xl bg-neutral-800">🍽️</div>
+              ${item.badge ? `<span class="absolute top-2 left-2 text-[9px] bg-black/80 text-yellow-400 border border-gold-500/40 px-1.5 py-0.5 rounded-full font-medium">${item.badge}</span>` : ""}
+              <span class="absolute top-2 right-2 text-sm drop-shadow">${item.veg ? "🟢" : "🔴"}</span>
+              ${isUnavailable ? `<span class="absolute inset-0 bg-black/70 flex items-center justify-center text-xs font-bold text-red-400 uppercase">Sold Out</span>` : ''}
+            </div>
+            <div class="p-3">
+              <h3 class="font-semibold text-sm leading-tight line-clamp-1 text-white">${item.name}</h3>
+              <div class="flex items-center gap-1 mt-1 text-[10px]" style="color:rgba(255,255,255,0.6)">
+                <span>★ ${item.rating || 4.5}</span>
+                <span>•</span>
+                <span>${item.orders || 100}+ orders</span>
+              </div>
+            </div>
+          </div>
+          <div class="p-3 pt-0">
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-bold text-yellow-400">${formatPrice(item.price)}</span>
+              ${item.halfPrice && !isUnavailable ? `<button onclick="App.addHalf('${item.id}')" class="text-[10px] px-2 py-0.5 border border-yellow-500/40 rounded-full" style="color:#d4af37">Half ₹${item.halfPrice}</button>` : ''}
+            </div>
+            <div class="flex gap-1.5">
+              <button onclick="${isUnavailable ? '' : `App.addToCart('${item.id}')`}" class="flex-1 ${isUnavailable ? 'bg-neutral-800 text-stone-500 cursor-not-allowed' : 'bg-gold-500 text-black'} text-xs font-semibold py-1.5 rounded-full active:scale-95 transition">
+                ${isUnavailable ? 'UNAVAILABLE' : 'ADD'}
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderThali() {
+      const { total, cal } = thaliTotal();
+      const compartments = [
+        { key: "rice", label: "Rice" },
+        { key: "bread", label: "Bread" },
+        { key: "dal", label: "Dal" },
+        { key: "sabzi", label: "Sabzi" },
+        { key: "protein", label: "Protein" },
+        { key: "dessert", label: "Dessert" }
+      ];
+
+      return `
+        <div class="px-4 pt-14 pb-4">
+          <div class="flex items-center justify-between mb-1">
+            <h1 class="font-display text-2xl font-bold">Build Your Thali</h1>
+            <button onclick="App.randomThali()" class="text-[10px] px-2 py-1 rounded-full border border-yellow-500/50" style="color:#d4af37">🎲 Surprise</button>
+          </div>
+          <p class="text-sm mb-5" style="color:rgba(255,255,255,0.6)">Tap items to place them on the plate</p>
+
+          <div class="thali-scene mb-8 mt-2">
+            <div class="thali-plate-3d">
+              <div class="thali-center-3d ${state.thali.protein ? 'filled' : ''}">
+                ${state.thali.protein
+                  ? (state.thali.protein.img ? `<img src="${state.thali.protein.img}" class="food-item-enter w-full h-full object-cover" alt=""/>` : `<span style="font-size:24px">${state.thali.protein.emoji || '🧀'}</span>`)
+                  : `<span style="font-size:11px;color:#8a6e38;text-align:center;line-height:1.2">Main</span>`}
+              </div>
+              ${compartments.filter(c => c.key !== "protein").map((c, i) => {
+                const angle = (i * 60) - 90;
+                const rad = (angle * Math.PI) / 180;
+                const r = 92;
+                const x = Math.cos(rad) * r;
+                const y = Math.sin(rad) * r;
+                const item = state.thali[c.key];
+                return `
+                  <div class="compartment-3d ${item ? 'filled' : ''}"
+                       style="left:50%;top:50%;margin-left:-28px;margin-top:-28px;transform:translate(${x}px, ${y}px) translateZ(12px);">
+                    ${item
+                      ? (item.img ? `<img src="${item.img}" class="food-item-enter w-full h-full object-cover" alt=""/>` : `<span style="font-size:18px">${item.emoji || '🍲'}</span>`)
+                      : `<span style="font-size:9px;color:#a88848;text-align:center;padding:2px">${c.label}</span>`}
+                  </div>`;
+              }).join("")}
+              ${state.thali.sides.length ? `
+              <div style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%) translateZ(15px);display:flex;gap:4px;z-index:6">
+                ${state.thali.sides.map(s => s.img 
+                  ? `<img src="${s.img}" class="w-6 h-6 rounded-full object-cover shadow border border-gold-500" alt=""/>` 
+                  : `<span style="font-size:14px">${s.emoji}</span>`).join("")}
+              </div>` : ""}
+            </div>
+            <p style="text-align:center;font-size:10px;color:#c9a227;margin-top:12px">↻ 3D Thali — tap items below to fill</p>
+          </div>
+
+          <div class="bg-neutral-900 border border-gold-500/30 rounded-2xl p-4 mb-5 flex justify-between items-center text-white">
+            <div>
+              <div class="text-xs" style="color:rgba(255,255,255,0.6)">Your Thali</div>
+              <div class="font-bold text-lg text-yellow-400">${formatPrice(total)}</div>
+              <div class="text-xs" style="color:rgba(255,255,255,0.6)">${cal} kcal</div>
+            </div>
+            <button onclick="App.addThaliToCart()" class="bg-gold-500 text-black font-semibold px-5 py-2.5 rounded-full text-sm ${total === 0 ? "opacity-40 pointer-events-none" : ""}">
+              Add to Cart
+            </button>
+          </div>
+
+          <h3 class="font-semibold text-sm mb-2">Quick Presets</h3>
+          <div class="flex gap-2 overflow-x-auto hide-scrollbar mb-5 pb-1">
+            ${THALI_PRESETS.map(p => `
+              <button onclick="App.applyPreset('${p.id}')" class="flex-shrink-0 bg-neutral-900 border border-gold-500/20 rounded-xl px-3 py-2 text-left active:scale-95 transition">
+                <div class="text-lg">${p.emoji}</div>
+                <div class="text-xs font-semibold">${p.name}</div>
+                <div class="text-[10px] text-yellow-500 font-medium">${formatPrice(p.price)}</div>
+              </button>
+            `).join("")}
+          </div>
+
+          ${Object.entries(THALI_OPTIONS).map(([key, options]) => {
+            const labels = {
+              rice: "Rice / Pulao",
+              bread: "Roti / Naan",
+              dal: "Dal",
+              sabzi: "Sabzi",
+              protein: "Main Protein",
+              sides: "Sides",
+              dessert: "Dessert"
+            };
+            const isMulti = key === "sides";
+            return `
+              <div class="mb-4">
+                <h4 class="text-sm font-semibold mb-2">${labels[key]}</h4>
+                <div class="grid grid-cols-2 gap-2">
+                  ${options.map(opt => {
+                    const selected = isMulti
+                      ? state.thali.sides.some(s => s.id === opt.id)
+                      : state.thali[key]?.id === opt.id;
+                    const isOut = opt.available === false;
+                    return `
+                      <button onclick="${isOut ? '' : `App.selectThaliItem('${key}', '${opt.id}')`}"
+                        class="p-2 rounded-xl text-xs font-medium border flex items-center gap-2 transition active:scale-95 text-left
+                          ${isOut ? 'opacity-40 bg-neutral-900 border-neutral-800' : selected ? "bg-gold-500 text-black border-gold-500" : "bg-neutral-900 border-gold-500/20 text-white"}">
+                        ${opt.img ? `<img src="${opt.img}" class="w-8 h-8 rounded-lg object-cover flex-shrink-0" alt=""/>` : `<span class="text-lg">${opt.emoji}</span>`}
+                        <div class="min-w-0 flex-1">
+                          <div class="truncate font-semibold">${opt.name} ${isOut ? '(Out)' : ''}</div>
+                          <div class="text-[10px] opacity-80">${formatPrice(opt.price)}</div>
+                        </div>
+                      </button>
+                    `;
+                  }).join("")}
+                </div>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    function renderMenu() {
+      const cats = [
+        { id: "paneer", name: "Paneer Specials" },
+        { id: "nonveg", name: "Non-Veg Delights" },
+        { id: "rice", name: "Rice" },
+        { id: "bread", name: "Breads" },
+        { id: "beverages", name: "Extras" }
+      ];
+
+      const filteredItems = MENU.filter(m => {
+        const matchesQuery = !state.searchQuery || 
+          m.name.toLowerCase().includes(state.searchQuery.toLowerCase());
+        const matchesType = state.activeFilter === 'all' || 
+          (state.activeFilter === 'veg' && m.veg) || 
+          (state.activeFilter === 'nonveg' && !m.veg);
+        return matchesQuery && matchesType;
+      });
+
+      return `
+        <div class="pt-14 pb-4">
+          <div class="px-4 mb-3">
+            <h1 class="font-display text-2xl font-bold" style="color:#d4af37">Menu</h1>
+            <p class="text-sm mt-0.5" style="color:rgba(255,255,255,0.6)">Hotel Muskan · ${state.table}</p>
+          </div>
+
+          <div class="px-4 mb-4 space-y-2">
+            <input type="text" value="${state.searchQuery}" placeholder="🔍 Search dishes..."
+                   oninput="App.handleSearch(this.value)"
+                   class="w-full px-3.5 py-2 text-xs rounded-xl border border-yellow-500/30 focus:outline-none" />
+            <div class="flex gap-2 text-xs">
+              <button onclick="App.setFilter('all')" class="px-3 py-1 rounded-full border ${state.activeFilter === 'all' ? 'bg-gold-500 text-black border-gold-500' : 'border-yellow-500/40 text-white'}">All</button>
+              <button onclick="App.setFilter('veg')" class="px-3 py-1 rounded-full border ${state.activeFilter === 'veg' ? 'bg-green-600 text-white border-green-600' : 'border-yellow-500/40 text-white'}">🟢 Pure Veg</button>
+              <button onclick="App.setFilter('nonveg')" class="px-3 py-1 rounded-full border ${state.activeFilter === 'nonveg' ? 'bg-red-600 text-white border-red-600' : 'border-yellow-500/40 text-white'}">🔴 Non-Veg</button>
+            </div>
+          </div>
+
+          <div class="px-4 space-y-8">
+            ${cats.map(c => {
+              const items = filteredItems.filter(m => m.cat === c.id);
+              if (!items.length) return "";
+              return `
+                <div id="cat-${c.id}">
+                  <h2 class="font-semibold text-base mb-3" style="color:#d4af37">${c.name}</h2>
+                  <div class="grid grid-cols-2 gap-3">
+                    ${items.map(item => foodCard(item)).join("")}
+                  </div>
+                </div>`;
+            }).join("")}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderMyOrders() {
+      var allOrders = loadOrders();
+      var userOrders = state.customerPhone ? allOrders.filter(o => o.customerPhone === state.customerPhone) : [];
+      
+      var statusNames = ["Placed", "Accepted", "Preparing", "Ready", "Serving", "Served"];
+
+      return `
+        <div class="pt-14 px-4 pb-10">
+          <div class="flex justify-between items-center mb-4">
+            <div>
+              <h1 class="font-display text-2xl font-bold" style="color:#d4af37">My Orders</h1>
+              <p class="text-xs text-stone-400">${state.customerPhone ? `Account: ${state.customerPhone}` : 'Guest Mode'}</p>
+            </div>
+            ${!state.customerPhone ? `
+              <button onclick="App.openLoginModal()" class="text-xs px-3 py-1.5 rounded-full bg-gold-500 text-black font-bold">Login</button>
+            ` : `
+              <button onclick="App.logout()" class="text-[10px] px-2.5 py-1 rounded-full border border-red-500/40 text-red-400">Logout</button>
+            `}
+          </div>
+
+          ${!state.customerPhone ? `
+            <div class="text-center py-16 bg-neutral-900 border border-gold-500/20 rounded-2xl p-6">
+              <div class="text-5xl mb-3">📱</div>
+              <h3 class="font-bold text-base text-yellow-400 mb-1">Enter Phone Number</h3>
+              <p class="text-xs text-stone-400 mb-5">Login with your phone number to see your private orders and bills.</p>
+              <button onclick="App.openLoginModal()" class="w-full bg-gold-500 text-black py-2.5 rounded-xl font-bold text-xs">
+                Quick Phone Login
+              </button>
+            </div>
+          ` : userOrders.length === 0 ? `
+            <div class="text-center py-16" style="color:rgba(255,255,255,0.45)">
+              <div class="text-5xl mb-3">📋</div>
+              <p class="text-base font-semibold text-white mb-1">No orders found for this number</p>
+              <p class="text-xs mb-6">Place an order to see your live order status here</p>
+              <button onclick="App.navigate('menu')" class="bg-gold-500 text-black px-5 py-2.5 rounded-full text-xs font-bold">
+                Browse Menu
+              </button>
+            </div>
+          ` : userOrders.map(function(o) {
+            var st = (o.status != null ? o.status : 0);
+            return `
+              <div class="rounded-2xl p-4 mb-4 border border-yellow-500/30" style="background:#141414">
+                <div class="flex justify-between items-start mb-2">
+                  <div>
+                    <div class="font-bold text-white text-base">${o.id}</div>
+                    <div class="text-[11px]" style="color:#d4af37">${o.table || ""} · ${o.time || ""} · ${(o.payment || "PAID").toUpperCase()}</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="font-bold text-base" style="color:#d4af37">₹${o.total}</div>
+                    <span class="inline-block text-[10px] px-2 py-0.5 rounded-full bg-yellow-900/40 border border-yellow-500/40 text-yellow-300 font-medium">
+                      ${statusNames[st] || statusNames[0]}
+                    </span>
+                  </div>
+                </div>
+
+                <div class="space-y-1.5 my-3 border-y border-neutral-800 py-2.5">
+                  ${(o.items || []).map(function(i) {
+                    return `
+                      <div class="flex justify-between text-xs" style="color:rgba(255,255,255,0.85)">
+                        <span>${i.qty || 1}× ${i.name}</span>
+                        <span>₹${(i.price || 0) * (i.qty || 1)}</span>
+                      </div>
+                    `;
+                  }).join("")}
+                </div>
+
+                <div class="flex gap-2 mt-2">
+                  <button onclick="App.reorderItems('${o.id}')" class="flex-1 py-2 bg-gold-500 text-black rounded-xl text-xs font-bold">
+                    🔄 Re-Order Items
+                  </button>
+                  <button onclick="App.printPaperReceipt('${o.id}')" class="flex-1 py-2 bg-neutral-900 border border-yellow-500/40 rounded-xl text-xs font-semibold text-yellow-400">
+                    🧾 View Bill
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    function renderCart() {
+      if (state.cart.length === 0) {
+        return `
+          <div class="pt-20 px-6 text-center">
+            <div class="text-6xl mb-4">🛒</div>
+            <h2 class="font-display text-xl font-bold mb-2">Your cart is empty</h2>
+            <p class="text-sm mb-6" style="color:rgba(255,255,255,0.6)">Add something delicious from the menu</p>
+            <button onclick="App.navigate('menu')" class="bg-gold-500 text-black px-6 py-3 rounded-full font-semibold">Browse Menu</button>
+          </div>
+        `;
+      }
+
+      const subtotal = cartSubtotal();
+      const total = cartTotal();
+
+      return `
+        <div class="pt-14 px-4 pb-8">
+          <div class="flex justify-between items-start mb-1">
+            <h1 class="font-display text-2xl font-bold" style="color:#d4af37">Your Cart</h1>
+            <button onclick="App.clearCart()" class="text-xs" style="color:rgba(255,255,255,0.45)">Clear</button>
+          </div>
+          <p class="text-sm mb-4" style="color:rgba(255,255,255,0.5)">${state.table} · ${cartCount()} items</p>
+
+          <div class="space-y-3 mb-4">
+            ${state.cart.map((item, idx) => `
+              <div class="flex gap-3 bg-neutral-900 border border-gold-500/20 rounded-2xl p-3">
+                <div class="w-14 h-14 rounded-xl bg-neutral-800 overflow-hidden flex-shrink-0 flex items-center justify-center">
+                  ${item.img ? `<img src="${item.img}" class="w-full h-full object-cover" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"/><span class="hidden text-xl">🍽️</span>` : `<span class="text-xl">🍽️</span>`}
+                </div>
+                <div class="flex-1 min-w-0">
+                  <div class="font-semibold text-sm">${item.name}</div>
+                  ${item.custom ? `<div class="text-[10px] text-yellow-500/80 mt-0.5">${item.custom}</div>` : ""}
+                  <div class="flex items-center justify-between mt-2">
+                    <span class="font-bold text-yellow-400">${formatPrice(item.price * item.qty)}</span>
+                    <div class="flex items-center gap-2">
+                      <button onclick="App.updateQty(${idx}, -1)" class="w-7 h-7 rounded-full bg-neutral-800 flex items-center justify-center text-sm font-bold">−</button>
+                      <span class="text-sm font-semibold w-5 text-center">${item.qty}</span>
+                      <button onclick="App.updateQty(${idx}, 1)" class="w-7 h-7 rounded-full bg-gold-500 text-black flex items-center justify-center text-sm font-bold">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+
+          <!-- Kitchen Cooking Notes Box -->
+          <div class="bg-neutral-900 border border-gold-500/30 rounded-2xl p-3.5 mb-3">
+            <label class="block text-[11px] font-semibold text-yellow-400 mb-1">👨‍🍳 Cooking / Kitchen Instructions</label>
+            <input type="text" id="cart-cooking-notes" value="${state.cookingNotes || ''}" oninput="state.cookingNotes = this.value" placeholder="e.g. Less spicy, Extra gravy, No onions..." class="w-full text-xs px-3 py-2 rounded-xl focus:outline-none" />
+          </div>
+
+          <!-- Staff Tip -->
+          <div class="bg-neutral-900 border border-gold-500/30 rounded-2xl p-3.5 mb-3 space-y-2.5">
+            <div class="flex justify-between items-center text-xs">
+              <span class="text-stone-300">Tip for Waiter/Staff</span>
+              <div class="flex gap-1">
+                ${[0, 10, 20, 50].map(tip => `
+                  <button onclick="App.setTip(${tip})" class="px-2 py-0.5 rounded-lg border text-[10px] ${state.tipAmount === tip ? 'bg-gold-500 text-black border-gold-500 font-bold' : 'border-yellow-500/30 text-stone-300'}">
+                    ${tip === 0 ? 'None' : '₹' + tip}
+                  </button>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-neutral-900 border border-gold-500/30 rounded-2xl p-3.5 mb-4">
+            <div class="flex justify-between items-center mb-2">
+              <label class="text-[11px] font-semibold text-yellow-400">👤 Guest Identification</label>
+              <button onclick="App.openLoginModal()" class="text-[10px] text-stone-400 underline">Change</button>
+            </div>
+            ${state.customerPhone ? `
+              <div class="text-xs font-semibold text-white">${state.customerName || 'Guest'} (${state.customerPhone})</div>
+            ` : `
+              <button onclick="App.openLoginModal()" class="w-full bg-neutral-800 border border-dashed border-gold-500/40 text-yellow-400 py-2 rounded-xl text-xs font-semibold">
+                + Add Phone Number for Bill
+              </button>
+            `}
+          </div>
+
+          <div class="bg-neutral-900 rounded-2xl p-4 space-y-1.5 text-xs mb-5 border border-gold-500/20">
+            <div class="flex justify-between text-stone-300"><span>Items Subtotal</span><span>${formatPrice(subtotal)}</span></div>
+            ${state.tipAmount > 0 ? `<div class="flex justify-between text-yellow-300"><span>Staff Tip</span><span>+₹${state.tipAmount}</span></div>` : ''}
+            <div class="flex justify-between font-bold text-base pt-2 border-t border-neutral-800 text-white">
+              <span>Total Amount</span><span class="text-yellow-400">${formatPrice(total)}</span>
+            </div>
+          </div>
+
+          <button onclick="App.proceedToCheckout()" class="w-full bg-gold-500 text-black font-semibold py-3.5 rounded-2xl text-base shadow-lg shadow-gold-500/20 active:scale-[0.98] transition">
+            Proceed to Payment · ${formatPrice(total)}
+          </button>
+        </div>
+      `;
+    }
+
+    function renderPayment() {
+      const total = cartTotal();
+      const methods = [
+        { id: "phonepe", name: "PhonePe", icon: "💜", desc: UPI_VPA },
+        { id: "gpay", name: "Google Pay", icon: "🔵", desc: UPI_VPA },
+        { id: "paytm", name: "Paytm UPI", icon: "🟦", desc: UPI_VPA },
+        { id: "navi", name: "Navi UPI", icon: "🟢", desc: UPI_VPA },
+        { id: "upi", name: "Any UPI App", icon: "📱", desc: "Instant Intent Pay" },
+        { id: "cash", name: "Cash at Counter", icon: "💵", desc: "Pay when food arrives" }
+      ];
+
+      return `
+        <div class="pt-14 px-4 pb-8">
+          <button onclick="App.navigate('cart')" class="text-sm text-yellow-500 mb-4">← Back to Cart</button>
+          <h1 class="font-display text-2xl font-bold mb-1">Payment</h1>
+          <p class="text-sm mb-5" style="color:rgba(255,255,255,0.6)">${state.table} · ${formatPrice(total)}</p>
+
+          <div class="bg-neutral-900 rounded-2xl p-4 mb-5 text-sm">
+            <div class="flex justify-between font-bold text-base">
+              <span>To Pay</span><span class="text-yellow-400">${formatPrice(total)}</span>
+            </div>
+          </div>
+
+          <div class="mb-5">
+            <div class="text-xs font-semibold mb-2" style="color:#d4af37">⚡ Fast UPI Payment:</div>
+            <div class="grid grid-cols-4 gap-2">
+              <button onclick="App.directAppPay('phonepe')" class="p-2.5 bg-neutral-900 border border-purple-500/40 rounded-xl text-center active:scale-95 transition">
+                <div class="text-xl">💜</div>
+                <div class="text-[10px] font-bold mt-1">PhonePe</div>
+              </button>
+              <button onclick="App.directAppPay('gpay')" class="p-2.5 bg-neutral-900 border border-blue-500/40 rounded-xl text-center active:scale-95 transition">
+                <div class="text-xl">🔵</div>
+                <div class="text-[10px] font-bold mt-1">GPay</div>
+              </button>
+              <button onclick="App.directAppPay('paytm')" class="p-2.5 bg-neutral-900 border border-sky-500/40 rounded-xl text-center active:scale-95 transition">
+                <div class="text-xl">🟦</div>
+                <div class="text-[10px] font-bold mt-1">Paytm</div>
+              </button>
+              <button onclick="App.directAppPay('navi')" class="p-2.5 bg-neutral-900 border border-green-500/40 rounded-xl text-center active:scale-95 transition">
+                <div class="text-xl">🟢</div>
+                <div class="text-[10px] font-bold mt-1">Navi</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="rounded-2xl p-4 mb-5 border border-yellow-500/40 text-center" style="background:#111">
+            <div class="text-[10px] uppercase tracking-wider mb-2" style="color:#d4af37">Scan to Pay</div>
+            <img src="${upiQrImageUrl(total, 220)}" alt="UPI QR"
+                 style="width:220px;height:220px;margin:0 auto;border-radius:12px;background:#fff;padding:8px;display:block" />
+            <div class="mt-3 text-xs font-bold text-white">${UPI_VPA}</div>
+            <div class="text-sm font-bold mt-1" style="color:#d4af37">${formatPrice(total)}</div>
+          </div>
+
+          <h3 class="font-semibold text-sm mb-3">Or Choose Method</h3>
+          <div class="space-y-2 mb-6">
+            ${methods.map(m => `
+              <button onclick="App.selectPayment('${m.id}')" 
+                class="w-full flex items-center gap-3 bg-neutral-900 border-2 ${state.paymentMethod === m.id ? 'border-yellow-500' : 'border-gold-500/20'} rounded-2xl p-3.5 text-left active:scale-[0.99] transition">
+                <span class="text-2xl">${m.icon}</span>
+                <div class="flex-1">
+                  <div class="font-semibold text-sm">${m.name}</div>
+                  <div class="text-[10px]" style="color:rgba(255,255,255,0.5)">${m.desc}</div>
+                </div>
+                ${state.paymentMethod === m.id ? '<span class="text-yellow-400 font-bold">✓</span>' : ''}
+              </button>
+            `).join("")}
+          </div>
+
+          <button onclick="App.confirmPayment()" 
+            class="w-full bg-gold-500 text-black font-semibold py-3.5 rounded-2xl text-base shadow-lg ${!state.paymentMethod ? 'opacity-40 pointer-events-none' : ''}">
+            ${state.paymentMethod === 'cash' 
+              ? "Confirm Order (Pay at Counter)" 
+              : "Pay & Place Order · " + formatPrice(total)}
+          </button>
+        </div>
+      `;
+    }
+
+    function renderOrderTracking() {
+      if (!state.order) return renderHome();
+      return `
+        <div class="pt-14 px-4 pb-8">
+          <div class="text-center mb-6">
+            <div class="text-4xl mb-2">🎉</div>
+            <h1 class="font-display text-xl font-bold">Order Placed!</h1>
+            <p class="text-sm mt-1" style="color:rgba(255,255,255,0.6)">${state.order.id} · ${state.table}</p>
+          </div>
+
+          <div class="bg-neutral-900 border border-gold-500/20 rounded-2xl p-5 mb-5 relative status-timeline">
+            ${STATUS_LABELS.map((s, i) => `
+              <div class="flex gap-4 mb-5 last:mb-0 relative">
+                <div class="w-8 h-8 rounded-full flex items-center justify-center text-sm z-10
+                  ${i <= state.orderStatus ? "bg-gold-500 text-black" : "bg-neutral-800 text-white"}">
+                  ${i < state.orderStatus ? "✓" : s.icon}
+                </div>
+                <div class="pt-1">
+                  <div class="font-semibold text-sm">${s.label}</div>
+                </div>
+              </div>
+            `).join("")}
+          </div>
+
+          <div class="flex gap-2">
+            <button onclick="App.printPaperReceipt('${state.order.id}')" class="w-full bg-neutral-900 border border-yellow-500/40 py-3 rounded-xl text-xs font-semibold text-yellow-400">
+              🧾 View Bill / Receipt
+            </button>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAdmin() {
+      var allOrders = loadOrders();
+      var serviceReqs = loadServiceRequests();
+      var statusNames = ["Placed", "Accepted", "Preparing", "Ready", "Serving", "Served"];
+      const thaliCategoryNames = {
+        rice: "Rice / Pulao",
+        bread: "Roti / Naan",
+        dal: "Dal",
+        sabzi: "Sabzi",
+        protein: "Main Protein",
+        sides: "Sides",
+        dessert: "Dessert"
+      };
+
+      // Filtered Orders for search
+      const orders = allOrders.filter(o => {
+        if (!state.adminOrderSearch) return true;
+        const q = state.adminOrderSearch.toLowerCase();
+        return (o.id && o.id.toLowerCase().includes(q)) || 
+               (o.table && o.table.toLowerCase().includes(q)) || 
+               (o.customerPhone && o.customerPhone.includes(q)) ||
+               (o.customerName && o.customerName.toLowerCase().includes(q));
+      });
+
+      // Live Business Analytics Calculation
+      const totalRevenue = allOrders.reduce((sum, o) => sum + (Number(o.total) || 0), 0);
+      const activePendingOrders = allOrders.filter(o => (o.status || 0) < 5).length;
+
+      return `
+        <div class="pt-14 px-4 pb-10">
+          <div class="flex items-center justify-between mb-3">
+            <div>
+              <h1 class="font-display text-2xl font-bold" style="color:#d4af37">Staff Admin</h1>
+              <p class="text-[11px] text-stone-400">Hotel Muskan Management</p>
+            </div>
+            <button onclick="App.navigate('home')" class="text-xs px-3 py-1.5 rounded-full border border-yellow-500/40" style="color:#d4af37">← Home</button>
+          </div>
+
+          <!-- Sales Summary Stats Banner -->
+          <div class="grid grid-cols-3 gap-2 mb-4">
+            <div class="bg-neutral-900 border border-gold-500/30 p-2.5 rounded-2xl text-center">
+              <div class="text-[10px] text-stone-400">Total Sales</div>
+              <div class="font-bold text-sm text-yellow-400">₹${totalRevenue}</div>
+            </div>
+            <div class="bg-neutral-900 border border-gold-500/30 p-2.5 rounded-2xl text-center">
+              <div class="text-[10px] text-stone-400">Total Orders</div>
+              <div class="font-bold text-sm text-white">${allOrders.length}</div>
+            </div>
+            <div class="bg-neutral-900 border border-gold-500/30 p-2.5 rounded-2xl text-center">
+              <div class="text-[10px] text-stone-400">Active Kitchen</div>
+              <div class="font-bold text-sm text-orange-400">${activePendingOrders}</div>
+            </div>
+          </div>
+
+          <div class="flex border-b border-neutral-800 mb-4">
+            <button onclick="App.setAdminTab('orders')" class="flex-1 py-2 text-xs font-bold ${state.adminTab === 'orders' ? 'border-b-2 border-yellow-500 text-yellow-400' : 'text-stone-400'}">
+              📋 Orders (${allOrders.length})
+            </button>
+            <button onclick="App.setAdminTab('requests')" class="flex-1 py-2 text-xs font-bold ${state.adminTab === 'requests' ? 'border-b-2 border-yellow-500 text-yellow-400' : 'text-stone-400'}">
+              🔔 Calls (${serviceReqs.length})
+            </button>
+            <button onclick="App.setAdminTab('menu')" class="flex-1 py-2 text-xs font-bold ${state.adminTab === 'menu' ? 'border-b-2 border-yellow-500 text-yellow-400' : 'text-stone-400'}">
+              🍲 Menu (${MENU.length})
+            </button>
+            <button onclick="App.setAdminTab('thali')" class="flex-1 py-2 text-xs font-bold ${state.adminTab === 'thali' ? 'border-b-2 border-yellow-500 text-yellow-400' : 'text-stone-400'}">
+              🍱 Thali
+            </button>
+          </div>
+
+          ${state.adminTab === 'orders' ? `
+            <div class="space-y-2 mb-4">
+              <input type="text" value="${state.adminOrderSearch || ''}" oninput="App.handleAdminSearch(this.value)" placeholder="🔍 Search by Order ID, Table, or Phone..." class="w-full px-3 py-2 text-xs rounded-xl focus:outline-none" />
+              <div class="flex justify-between items-center">
+                <button onclick="App.exportOrdersToCSV()" class="text-[10px] px-3 py-1.5 rounded-full bg-emerald-700/60 border border-emerald-500 text-emerald-200 font-bold">
+                  📊 Export Sales (Excel/CSV)
+                </button>
+                <button onclick="App.adminClearOrders()" class="text-[10px] px-3 py-1.5 rounded-full border border-red-500/40 text-red-400">Clear All Orders</button>
+              </div>
+            </div>
+
+            ${orders.length === 0 ? `
+              <div class="text-center py-16 text-stone-500">
+                <div class="text-4xl mb-2">📋</div>
+                <p>No matching orders recorded</p>
+              </div>
+            ` : orders.map(function(o) {
+              var st = (o.status != null ? o.status : 0);
+              return `
+              <div class="rounded-2xl p-4 mb-3 border border-yellow-500/25 bg-neutral-900">
+                <div class="flex justify-between items-start mb-2">
+                  <div>
+                    <div class="font-bold text-white">${o.id}</div>
+                    <div class="text-[10px] text-yellow-400">${o.table || ""} · ${o.customerName || 'Guest'} (${o.customerPhone || 'No Phone'})</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="font-bold text-yellow-400">₹${o.total}</div>
+                    <div class="text-[10px] text-stone-400">${statusNames[st]}</div>
+                  </div>
+                </div>
+                ${o.notes ? `<div class="bg-black/60 p-2 rounded-xl text-[11px] text-yellow-300/90 mb-2.5 border border-gold-500/20">📝 <b>Note:</b> ${o.notes}</div>` : ''}
+                <div class="space-y-1 mb-3">
+                  ${(o.items || []).map(function(i) {
+                    return `<div class="flex justify-between text-xs text-stone-300">
+                      <span>${i.qty || 1}× ${i.name}</span>
+                      <span>₹${(i.price || 0) * (i.qty || 1)}</span>
+                    </div>`;
+                  }).join("")}
+                </div>
+                <div class="flex flex-wrap gap-1 mb-2">
+                  <button onclick="App.adminSetStatus('${o.id}',1)" class="text-[10px] px-2 py-1 rounded-full bg-blue-900/50 border border-blue-500/30">Accept</button>
+                  <button onclick="App.adminSetStatus('${o.id}',2)" class="text-[10px] px-2 py-1 rounded-full bg-orange-900/50 border border-orange-500/30">Prep</button>
+                  <button onclick="App.adminSetStatus('${o.id}',3)" class="text-[10px] px-2 py-1 rounded-full bg-green-900/50 border border-green-500/30">Ready</button>
+                  <button onclick="App.adminSetStatus('${o.id}',5)" class="text-[10px] px-2 py-1 rounded-full bg-yellow-900/40 border border-yellow-500/40">Served</button>
+                  <button onclick="App.printPaperReceipt('${o.id}')" class="text-[10px] px-2 py-1 rounded-full bg-neutral-800 border border-yellow-500/40 text-yellow-400">Print Bill</button>
+                </div>
+                <button onclick="App.sendWhatsAppWithImage('${o.id}')" class="w-full mt-1 py-2 bg-green-600 hover:bg-green-500 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 shadow-md active:scale-95 transition">
+                  💬 Send WhatsApp Bill (Image + Text)
+                </button>
+              </div>`;
+            }).join("")}
+          ` : state.adminTab === 'requests' ? `
+            <div class="flex gap-2 mb-4 justify-between items-center">
+              <span class="text-xs text-stone-400">Live Customer Calls</span>
+              <button onclick="App.clearServiceRequests()" class="text-[10px] px-3 py-1.5 rounded-full border border-red-500/40 text-red-400">Clear All</button>
+            </div>
+
+            ${serviceReqs.length === 0 ? `
+              <div class="text-center py-16 text-stone-500">
+                <div class="text-4xl mb-2">🔔</div>
+                <p>No active customer requests</p>
+              </div>
+            ` : serviceReqs.map(function(r) {
+              return `
+              <div class="rounded-2xl p-4 mb-3 border border-yellow-500/30 bg-neutral-900 flex justify-between items-center">
+                <div>
+                  <div class="font-bold text-sm text-yellow-400">${r.type === 'waiter' ? '🙋 Waiter Requested' : '💧 Water Requested'}</div>
+                  <div class="text-xs text-stone-300 mt-0.5">Table: <b class="text-white">${r.table}</b> · ${r.time}</div>
+                </div>
+                <button onclick="App.completeServiceRequest('${r.id}')" class="px-3 py-1.5 bg-green-600 text-white rounded-xl text-xs font-bold">
+                  Resolve ✓
+                </button>
+              </div>`;
+            }).join("")}
+          ` : state.adminTab === 'thali' ? `
+            <div class="flex gap-2 mb-4">
+              <button onclick="App.openAddThaliItemModal()" class="flex-1 bg-gold-500 text-black py-2 rounded-xl text-xs font-bold">
+                + Add Thali Item
+              </button>
+              <button onclick="App.resetThaliToDefault()" class="px-3 py-2 border border-red-500/40 text-red-400 rounded-xl text-xs font-semibold">
+                Reset Thali
+              </button>
+            </div>
+
+            <div class="space-y-4">
+              ${Object.entries(THALI_OPTIONS).map(([catKey, items]) => `
+                <div>
+                  <h3 class="text-xs font-bold text-yellow-400 uppercase tracking-wider mb-2">${thaliCategoryNames[catKey] || catKey}</h3>
+                  <div class="space-y-2">
+                    ${items.map(item => `
+                      <div class="bg-neutral-900 border border-gold-500/30 rounded-2xl p-3 flex items-center justify-between gap-3">
+                        ${item.img ? `<img src="${item.img}" class="w-12 h-12 rounded-xl object-cover bg-neutral-800 flex-shrink-0" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" /><div class="hidden w-12 h-12 rounded-xl bg-neutral-800 items-center justify-center text-xl flex-shrink-0">${item.emoji || '🍱'}</div>` : `<div class="w-12 h-12 rounded-xl bg-neutral-800 flex items-center justify-center text-xl flex-shrink-0">${item.emoji || '🍱'}</div>`}
+                        <div class="flex-1 min-w-0">
+                          <div class="font-bold text-xs truncate">${item.name}</div>
+                          <div class="text-[10px] text-stone-400">${item.cal || 0} kcal · ${item.veg === false ? '🔴 Non-Veg' : '🟢 Veg'}</div>
+                          <div class="text-xs font-bold text-yellow-400">₹${item.price}</div>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                          <button onclick="App.toggleThaliStock('${catKey}', '${item.id}')" class="px-2 py-0.5 rounded-lg text-[9px] font-bold border ${item.available !== false ? 'bg-green-900/40 border-green-500 text-green-300' : 'bg-red-900/40 border-red-500 text-red-300'}">
+                            ${item.available !== false ? 'In Stock' : 'Out'}
+                          </button>
+                          <div class="flex gap-1">
+                            <button onclick="App.openEditThaliItemModal('${catKey}', '${item.id}')" class="px-2 py-1 bg-neutral-800 border border-yellow-500/40 text-yellow-400 rounded-lg text-[10px] font-bold">Edit</button>
+                            <button onclick="App.deleteThaliItem('${catKey}', '${item.id}')" class="px-2 py-1 bg-neutral-800 border border-red-500/40 text-red-400 rounded-lg text-[10px] font-bold">Del</button>
+                          </div>
+                        </div>
+                      </div>
+                    `).join('')}
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          ` : `
+            <div class="flex gap-2 mb-4">
+              <button onclick="App.openAddDishModal()" class="flex-1 bg-gold-500 text-black py-2 rounded-xl text-xs font-bold">
+                + Add New Dish
+              </button>
+              <button onclick="App.resetMenuToDefault()" class="px-3 py-2 border border-red-500/40 text-red-400 rounded-xl text-xs font-semibold">
+                Reset Menu
+              </button>
+            </div>
+
+            <div class="space-y-3">
+              ${MENU.map((item, idx) => `
+                <div class="bg-neutral-900 border border-gold-500/30 rounded-2xl p-3 flex items-center justify-between gap-3">
+                  <img src="${item.img}" class="w-12 h-12 rounded-xl object-cover bg-neutral-800 flex-shrink-0" onerror="this.src='https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=200&h=200&fit=crop'" />
+                  <div class="flex-1 min-w-0">
+                    <div class="font-bold text-xs truncate">${item.name}</div>
+                    <div class="text-[10px] text-stone-400">${item.veg ? '🟢 Veg' : '🔴 Non-Veg'} · Cat: ${item.cat}</div>
+                    <div class="text-xs font-bold text-yellow-400">Full: ₹${item.price} ${item.halfPrice ? `· Half: ₹${item.halfPrice}` : ''}</div>
+                  </div>
+                  <div class="flex flex-col gap-1">
+                    <button onclick="App.toggleDishStock('${item.id}')" class="px-2 py-0.5 rounded-lg text-[9px] font-bold border ${item.available !== false ? 'bg-green-900/40 border-green-500 text-green-300' : 'bg-red-900/40 border-red-500 text-red-300'}">
+                      ${item.available !== false ? 'In Stock' : 'Out of Stock'}
+                    </button>
+                    <div class="flex gap-1">
+                      <button onclick="App.openEditDishModal('${item.id}')" class="px-2 py-1 bg-neutral-800 border border-yellow-500/40 text-yellow-400 rounded-lg text-[10px] font-bold">Edit</button>
+                      <button onclick="App.deleteDish('${item.id}')" class="px-2 py-1 bg-neutral-800 border border-red-500/40 text-red-400 rounded-lg text-[10px] font-bold">Del</button>
+                    </div>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `}
+        </div>
+      `;
+    }
+
+    // ========== EXPOSED API ==========
+    window.App = {
+      async initAppFlow() {
+        if ("Notification" in window && Notification.permission !== "granted") {
+          Notification.requestPermission();
+        }
+        setTimeout(function () {
+          const loadingScreen = document.getElementById("loading-screen");
+          loadingScreen.style.opacity = "0";
+          setTimeout(function () {
+            loadingScreen.style.display = "none";
+            if (!state.customerPhone) {
+              const loginScreen = document.getElementById("login-screen");
+              loginScreen.classList.remove("hidden");
+              loginScreen.classList.add("flex");
+            } else {
+              App.showMainApp();
+            }
+          }, 600);
+        }, 1800);
+      },
+
+      showMainApp() {
+        const app = document.getElementById("app");
+        app.classList.remove("hidden");
+        updateProfileUI();
+        App.navigate("home");
+      },
+
+      submitInitialLogin() {
+        const nameInput = document.getElementById("initial-login-name");
+        const phoneInput = document.getElementById("initial-login-phone");
+        const phone = (phoneInput.value || "").trim().replace(/[^0-9]/g, "");
+        const name = (nameInput.value || "").trim();
+
+        if (phone.length < 10) {
+          showToast("Please enter a valid 10-digit number");
+          return;
+        }
+
+        state.customerPhone = phone;
+        state.customerName = name || "Customer";
+        localStorage.setItem("muskan_user_phone", state.customerPhone);
+        localStorage.setItem("muskan_user_name", state.customerName);
+
+        const loginScreen = document.getElementById("login-screen");
+        loginScreen.classList.add("hidden");
+        loginScreen.classList.remove("flex");
+
+        App.showMainApp();
+        showToast("Welcome, " + state.customerName);
+      },
+
+      skipLogin() {
+        const loginScreen = document.getElementById("login-screen");
+        loginScreen.classList.add("hidden");
+        loginScreen.classList.remove("flex");
+        App.showMainApp();
+      },
+
+      navigate(screen) {
+        state.screen = screen;
+        setActiveNav(screen);
+        const main = document.getElementById("main-content");
+        let html = "";
+        switch (screen) {
+          case "home": html = renderHome(); break;
+          case "thali": html = renderThali(); break;
+          case "menu": html = renderMenu(); break;
+          case "myorders": html = renderMyOrders(); break;
+          case "admin": html = renderAdmin(); break;
+          case "cart": html = renderCart(); break;
+          case "payment": html = renderPayment(); break;
+          case "order": html = renderOrderTracking(); break;
+          default: html = renderHome();
+        }
+        main.innerHTML = html;
+        window.scrollTo(0, 0);
+        updateCartUI();
+        updateProfileUI();
+      },
+
+      setAdminTab(tab) {
+        state.adminTab = tab;
+        App.navigate('admin');
+      },
+
+      handleAdminSearch(val) {
+        state.adminOrderSearch = val;
+        const main = document.getElementById("main-content");
+        if (state.screen === 'admin') main.innerHTML = renderAdmin();
+      },
+
+      setTip(amount) {
+        state.tipAmount = amount;
+        App.navigate("cart");
+      },
+
+      reorderItems(orderId) {
+        const orders = loadOrders();
+        const o = orders.find(x => x.id === orderId);
+        if (!o || !o.items) return;
+        state.cart = [...o.items];
+        updateCartUI();
+        showToast("Previous order added to cart!");
+        App.navigate("cart");
+      },
+
+      toggleDishStock(id) {
+        const updated = MENU.map(m => m.id === id ? { ...m, available: m.available === false ? true : false } : m);
+        saveMenuData(updated);
+        showToast("Item stock updated!");
+        App.navigate("admin");
+      },
+
+      toggleThaliStock(catKey, id) {
+        const updated = { ...THALI_OPTIONS };
+        if (updated[catKey]) {
+          updated[catKey] = updated[catKey].map(i => i.id === id ? { ...i, available: i.available === false ? true : false } : i);
+        }
+        saveThaliData(updated);
+        showToast("Thali stock updated!");
+        App.navigate("admin");
+      },
+
+      exportOrdersToCSV() {
+        const orders = loadOrders();
+        if (orders.length === 0) {
+          showToast("No orders to export");
+          return;
+        }
+        let csvContent = "data:text/csv;charset=utf-8,Bill ID,Table,Customer Name,Phone,Time,Payment,Total\n";
+        orders.forEach(o => {
+          csvContent += `"${o.id}","${o.table}","${o.customerName || 'Guest'}","${o.customerPhone || ''}","${o.time}","${o.payment}","${o.total}"\n`;
+        });
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", `Hotel_Muskan_Sales_${Date.now()}.csv`);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast("Sales Report Downloaded!");
+      },
+
+      handleFileUpload(inputElement, targetInputId, previewContainerId) {
+        const file = inputElement.files[0];
+        if (!file) return;
+
+        if (file.size > 2 * 1024 * 1024) {
+          showToast("Image size should be less than 2MB");
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const base64String = e.target.result;
+          const targetInput = document.getElementById(targetInputId);
+          if (targetInput) targetInput.value = base64String;
+
+          const previewContainer = document.getElementById(previewContainerId);
+          if (previewContainer) {
+            previewContainer.innerHTML = `<img src="${base64String}" class="w-12 h-12 rounded-xl object-cover border border-gold-500/50" />`;
+          }
+          showToast("Image loaded successfully!");
+        };
+        reader.readAsDataURL(file);
+      },
+
+      openAddDishModal() {
+        const modal = document.getElementById("modal-container");
+        modal.innerHTML = `
+          <div class="bg-neutral-900 border border-gold-500/40 rounded-2xl p-5 w-full max-w-xs text-white my-auto shadow-2xl">
+            <h3 class="font-bold text-base mb-3 text-yellow-400 text-center">Add New Dish</h3>
+            <div class="space-y-2 text-xs mb-4">
+              <div>
+                <label class="block text-[10px] text-stone-400 mb-1">Dish Name</label>
+                <input type="text" id="new-dish-name" placeholder="e.g. Kadhai Paneer" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Full Price (₹)</label>
+                  <input type="number" id="new-dish-price" placeholder="250" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Half Price (₹)</label>
+                  <input type="number" id="new-dish-half" placeholder="130" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Category</label>
+                  <select id="new-dish-cat" class="w-full px-2 py-2 rounded-xl focus:outline-none text-xs">
+                    <option value="paneer">Paneer</option>
+                    <option value="nonveg">Non-Veg</option>
+                    <option value="rice">Rice</option>
+                    <option value="bread">Bread</option>
+                    <option value="beverages">Extras</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Type</label>
+                  <select id="new-dish-veg" class="w-full px-2 py-2 rounded-xl focus:outline-none text-xs">
+                    <option value="true">Veg 🟢</option>
+                    <option value="false">Non-Veg 🔴</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label class="block text-[10px] text-stone-400 mb-1">Dish Image</label>
+                <div class="flex items-center gap-2 mb-1.5">
+                  <label class="flex-1 bg-neutral-800 border border-gold-500/40 text-yellow-400 py-2 rounded-xl text-center cursor-pointer text-xs font-semibold hover:bg-neutral-700 transition">
+                    📁 Choose Device File
+                    <input type="file" accept="image/*" class="hidden" onchange="App.handleFileUpload(this, 'new-dish-img', 'new-dish-preview')" />
+                  </label>
+                  <div id="new-dish-preview" class="w-10 h-10 rounded-xl bg-neutral-800 flex items-center justify-center text-xs overflow-hidden flex-shrink-0">📷</div>
+                </div>
+                <input type="text" id="new-dish-img" placeholder="Or enter Image URL (https://...)" class="w-full px-3 py-1.5 rounded-xl focus:outline-none text-[11px]" />
+              </div>
+            </div>
+            <button onclick="App.saveNewDish()" class="w-full bg-gold-500 text-black py-2.5 rounded-xl font-bold text-xs mb-2">Add Dish to Menu</button>
+            <button onclick="App.closeModal()" class="w-full text-center text-xs text-stone-400 py-1">Cancel</button>
+          </div>
+        `;
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      },
+
+      saveNewDish() {
+        const name = document.getElementById("new-dish-name").value.trim();
+        const price = Number(document.getElementById("new-dish-price").value);
+        const halfPrice = document.getElementById("new-dish-half").value ? Number(document.getElementById("new-dish-half").value) : null;
+        const cat = document.getElementById("new-dish-cat").value;
+        const veg = document.getElementById("new-dish-veg").value === "true";
+        const img = document.getElementById("new-dish-img").value.trim() || "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&fit=crop";
+
+        if (!name || !price) {
+          showToast("Name and Full Price are required");
+          return;
+        }
+
+        const newDish = {
+          id: "m" + Date.now(),
+          name: name,
+          desc: name + " at Hotel Muskan",
+          price: price,
+          halfPrice: halfPrice,
+          cat: cat,
+          veg: veg,
+          rating: 4.8,
+          orders: 50,
+          badge: "⭐ New",
+          spice: 2,
+          available: true,
+          img: img
+        };
+
+        const updatedMenu = [...MENU, newDish];
+        saveMenuData(updatedMenu);
+        App.closeModal();
+        showToast("Dish added successfully!");
+        App.navigate("admin");
+      },
+
+      openEditDishModal(dishId) {
+        const item = MENU.find(m => m.id === dishId);
+        if (!item) return;
+
+        const modal = document.getElementById("modal-container");
+        modal.innerHTML = `
+          <div class="bg-neutral-900 border border-gold-500/40 rounded-2xl p-5 w-full max-w-xs text-white my-auto shadow-2xl">
+            <h3 class="font-bold text-base mb-3 text-yellow-400 text-center">Edit Dish Details</h3>
+            <div class="space-y-2 text-xs mb-4">
+              <div>
+                <label class="block text-[10px] text-stone-400 mb-1">Dish Name</label>
+                <input type="text" id="edit-dish-name" value="${item.name}" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Full Price (₹)</label>
+                  <input type="number" id="edit-dish-price" value="${item.price}" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Half Price (₹)</label>
+                  <input type="number" id="edit-dish-half" value="${item.halfPrice || ''}" placeholder="No Half" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+                </div>
+              </div>
+              <div>
+                <label class="block text-[10px] text-stone-400 mb-1">Category</label>
+                <select id="edit-dish-cat" class="w-full px-2 py-2 rounded-xl focus:outline-none text-xs">
+                  <option value="paneer" ${item.cat === 'paneer' ? 'selected' : ''}>Paneer</option>
+                  <option value="nonveg" ${item.cat === 'nonveg' ? 'selected' : ''}>Non-Veg</option>
+                  <option value="rice" ${item.cat === 'rice' ? 'selected' : ''}>Rice</option>
+                  <option value="bread" ${item.cat === 'bread' ? 'selected' : ''}>Bread</option>
+                  <option value="beverages" ${item.cat === 'beverages' ? 'selected' : ''}>Extras</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] text-stone-400 mb-1">Dish Image</label>
+                <div class="flex items-center gap-2 mb-1.5">
+                  <label class="flex-1 bg-neutral-800 border border-gold-500/40 text-yellow-400 py-2 rounded-xl text-center cursor-pointer text-xs font-semibold hover:bg-neutral-700 transition">
+                    📁 Change File
+                    <input type="file" accept="image/*" class="hidden" onchange="App.handleFileUpload(this, 'edit-dish-img', 'edit-dish-preview')" />
+                  </label>
+                  <div id="edit-dish-preview" class="w-10 h-10 rounded-xl bg-neutral-800 flex items-center justify-center text-xs overflow-hidden flex-shrink-0">
+                    ${item.img ? `<img src="${item.img}" class="w-full h-full object-cover" />` : '📷'}
+                  </div>
+                </div>
+                <input type="text" id="edit-dish-img" value="${item.img || ''}" placeholder="Or Image URL (https://...)" class="w-full px-3 py-1.5 rounded-xl focus:outline-none text-[11px]" />
+              </div>
+            </div>
+            <button onclick="App.saveEditDish('${item.id}')" class="w-full bg-gold-500 text-black py-2.5 rounded-xl font-bold text-xs mb-2">Save Changes</button>
+            <button onclick="App.closeModal()" class="w-full text-center text-xs text-stone-400 py-1">Cancel</button>
+          </div>
+        `;
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      },
+
+      saveEditDish(dishId) {
+        const name = document.getElementById("edit-dish-name").value.trim();
+        const price = Number(document.getElementById("edit-dish-price").value);
+        const halfPrice = document.getElementById("edit-dish-half").value ? Number(document.getElementById("edit-dish-half").value) : null;
+        const cat = document.getElementById("edit-dish-cat").value;
+        const img = document.getElementById("edit-dish-img").value.trim();
+
+        const updatedMenu = MENU.map(m => {
+          if (m.id === dishId) {
+            return { ...m, name, price, halfPrice, cat, img };
+          }
+          return m;
+        });
+
+        saveMenuData(updatedMenu);
+        App.closeModal();
+        showToast("Dish updated successfully!");
+        App.navigate("admin");
+      },
+
+      deleteDish(dishId) {
+        if (!confirm("Are you sure you want to delete this dish from menu?")) return;
+        const updatedMenu = MENU.filter(m => m.id !== dishId);
+        saveMenuData(updatedMenu);
+        showToast("Dish removed!");
+        App.navigate("admin");
+      },
+
+      resetMenuToDefault() {
+        if (!confirm("Reset all menu items to original factory defaults?")) return;
+        saveMenuData(DEFAULT_MENU);
+        showToast("Menu reset to defaults!");
+        App.navigate("admin");
+      },
+
+      openAddThaliItemModal() {
+        const modal = document.getElementById("modal-container");
+        modal.innerHTML = `
+          <div class="bg-neutral-900 border border-gold-500/40 rounded-2xl p-5 w-full max-w-xs text-white my-auto shadow-2xl">
+            <h3 class="font-bold text-base mb-3 text-yellow-400 text-center">Add Thali Item</h3>
+            <div class="space-y-2 text-xs mb-4">
+              <div>
+                <label class="block text-[10px] text-stone-400 mb-1">Item Name</label>
+                <input type="text" id="new-thali-name" placeholder="e.g. Butter Naan" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Price (₹)</label>
+                  <input type="number" id="new-thali-price" placeholder="50" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Calories (kcal)</label>
+                  <input type="number" id="new-thali-cal" placeholder="200" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Category</label>
+                  <select id="new-thali-cat" class="w-full px-2 py-2 rounded-xl focus:outline-none text-xs">
+                    <option value="rice">Rice / Pulao</option>
+                    <option value="bread">Roti / Naan</option>
+                    <option value="dal">Dal</option>
+                    <option value="sabzi">Sabzi</option>
+                    <option value="protein">Protein</option>
+                    <option value="sides">Sides</option>
+                    <option value="dessert">Dessert</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Type</label>
+                  <select id="new-thali-veg" class="w-full px-2 py-2 rounded-xl focus:outline-none text-xs">
+                    <option value="true">Veg 🟢</option>
+                    <option value="false">Non-Veg 🔴</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label class="block text-[10px] text-stone-400 mb-1">Emoji Icon</label>
+                <input type="text" id="new-thali-emoji" placeholder="🍛" value="🍛" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-stone-400 mb-1">Item Image</label>
+                <div class="flex items-center gap-2 mb-1.5">
+                  <label class="flex-1 bg-neutral-800 border border-gold-500/40 text-yellow-400 py-2 rounded-xl text-center cursor-pointer text-xs font-semibold hover:bg-neutral-700 transition">
+                    📁 Choose Device File
+                    <input type="file" accept="image/*" class="hidden" onchange="App.handleFileUpload(this, 'new-thali-img', 'new-thali-preview')" />
+                  </label>
+                  <div id="new-thali-preview" class="w-10 h-10 rounded-xl bg-neutral-800 flex items-center justify-center text-xs overflow-hidden flex-shrink-0">📷</div>
+                </div>
+                <input type="text" id="new-thali-img" placeholder="Or enter Image URL (https://...)" class="w-full px-3 py-1.5 rounded-xl focus:outline-none text-[11px]" />
+              </div>
+            </div>
+            <button onclick="App.saveNewThaliItem()" class="w-full bg-gold-500 text-black py-2.5 rounded-xl font-bold text-xs mb-2">Add to Thali</button>
+            <button onclick="App.closeModal()" class="w-full text-center text-xs text-stone-400 py-1">Cancel</button>
+          </div>
+        `;
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      },
+
+      saveNewThaliItem() {
+        const name = document.getElementById("new-thali-name").value.trim();
+        const price = Number(document.getElementById("new-thali-price").value) || 0;
+        const cal = Number(document.getElementById("new-thali-cal").value) || 0;
+        const cat = document.getElementById("new-thali-cat").value;
+        const veg = document.getElementById("new-thali-veg").value === "true";
+        const emoji = document.getElementById("new-thali-emoji").value.trim() || "🍛";
+        const img = document.getElementById("new-thali-img").value.trim();
+
+        if (!name) {
+          showToast("Item name is required");
+          return;
+        }
+
+        const newItem = {
+          id: "t-" + Date.now(),
+          name: name,
+          price: price,
+          cal: cal,
+          emoji: emoji,
+          img: img,
+          available: true,
+          veg: veg
+        };
+
+        const updatedOptions = { ...THALI_OPTIONS };
+        if (!updatedOptions[cat]) updatedOptions[cat] = [];
+        updatedOptions[cat].push(newItem);
+
+        saveThaliData(updatedOptions);
+        App.closeModal();
+        showToast("Thali item added!");
+        App.navigate("admin");
+      },
+
+      openEditThaliItemModal(catKey, itemId) {
+        const item = (THALI_OPTIONS[catKey] || []).find(i => i.id === itemId);
+        if (!item) return;
+
+        const modal = document.getElementById("modal-container");
+        modal.innerHTML = `
+          <div class="bg-neutral-900 border border-gold-500/40 rounded-2xl p-5 w-full max-w-xs text-white my-auto shadow-2xl">
+            <h3 class="font-bold text-base mb-3 text-yellow-400 text-center">Edit Thali Item</h3>
+            <div class="space-y-2 text-xs mb-4">
+              <div>
+                <label class="block text-[10px] text-stone-400 mb-1">Item Name</label>
+                <input type="text" id="edit-thali-name" value="${item.name}" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Price (₹)</label>
+                  <input type="number" id="edit-thali-price" value="${item.price}" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+                </div>
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Calories (kcal)</label>
+                  <input type="number" id="edit-thali-cal" value="${item.cal || 0}" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Category</label>
+                  <select id="edit-thali-cat" class="w-full px-2 py-2 rounded-xl focus:outline-none text-xs">
+                    <option value="rice" ${catKey === 'rice' ? 'selected' : ''}>Rice / Pulao</option>
+                    <option value="bread" ${catKey === 'bread' ? 'selected' : ''}>Roti / Naan</option>
+                    <option value="dal" ${catKey === 'dal' ? 'selected' : ''}>Dal</option>
+                    <option value="sabzi" ${catKey === 'sabzi' ? 'selected' : ''}>Sabzi</option>
+                    <option value="protein" ${catKey === 'protein' ? 'selected' : ''}>Protein</option>
+                    <option value="sides" ${catKey === 'sides' ? 'selected' : ''}>Sides</option>
+                    <option value="dessert" ${catKey === 'dessert' ? 'selected' : ''}>Dessert</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[10px] text-stone-400 mb-1">Type</label>
+                  <select id="edit-thali-veg" class="w-full px-2 py-2 rounded-xl focus:outline-none text-xs">
+                    <option value="true" ${item.veg !== false ? 'selected' : ''}>Veg 🟢</option>
+                    <option value="false" ${item.veg === false ? 'selected' : ''}>Non-Veg 🔴</option>
+                  </select>
+                </div>
+              </div>
+              <div>
+                <label class="block text-[10px] text-stone-400 mb-1">Emoji Icon</label>
+                <input type="text" id="edit-thali-emoji" value="${item.emoji || '🍛'}" class="w-full px-3 py-2 rounded-xl focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-stone-400 mb-1">Item Image</label>
+                <div class="flex items-center gap-2 mb-1.5">
+                  <label class="flex-1 bg-neutral-800 border border-gold-500/40 text-yellow-400 py-2 rounded-xl text-center cursor-pointer text-xs font-semibold hover:bg-neutral-700 transition">
+                    📁 Change File
+                    <input type="file" accept="image/*" class="hidden" onchange="App.handleFileUpload(this, 'edit-thali-img', 'edit-thali-preview')" />
+                  </label>
+                  <div id="edit-thali-preview" class="w-10 h-10 rounded-xl bg-neutral-800 flex items-center justify-center text-xs overflow-hidden flex-shrink-0">
+                    ${item.img ? `<img src="${item.img}" class="w-full h-full object-cover" />` : '📷'}
+                  </div>
+                </div>
+                <input type="text" id="edit-thali-img" value="${item.img || ''}" placeholder="Or Image URL (https://...)" class="w-full px-3 py-1.5 rounded-xl focus:outline-none text-[11px]" />
+              </div>
+            </div>
+            <button onclick="App.saveEditThaliItem('${catKey}', '${item.id}')" class="w-full bg-gold-500 text-black py-2.5 rounded-xl font-bold text-xs mb-2">Save Changes</button>
+            <button onclick="App.closeModal()" class="w-full text-center text-xs text-stone-400 py-1">Cancel</button>
+          </div>
+        `;
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      },
+
+      saveEditThaliItem(oldCatKey, itemId) {
+        const name = document.getElementById("edit-thali-name").value.trim();
+        const price = Number(document.getElementById("edit-thali-price").value) || 0;
+        const cal = Number(document.getElementById("edit-thali-cal").value) || 0;
+        const newCatKey = document.getElementById("edit-thali-cat").value;
+        const veg = document.getElementById("edit-thali-veg").value === "true";
+        const emoji = document.getElementById("edit-thali-emoji").value.trim() || "🍛";
+        const img = document.getElementById("edit-thali-img").value.trim();
+
+        const updatedOptions = { ...THALI_OPTIONS };
+        let itemToUpdate = null;
+
+        if (updatedOptions[oldCatKey]) {
+          const idx = updatedOptions[oldCatKey].findIndex(i => i.id === itemId);
+          if (idx !== -1) {
+            itemToUpdate = { ...updatedOptions[oldCatKey][idx], name, price, cal, emoji, img, veg };
+            updatedOptions[oldCatKey].splice(idx, 1);
+          }
+        }
+
+        if (itemToUpdate) {
+          if (!updatedOptions[newCatKey]) updatedOptions[newCatKey] = [];
+          updatedOptions[newCatKey].push(itemToUpdate);
+        }
+
+        saveThaliData(updatedOptions);
+        App.closeModal();
+        showToast("Thali item updated!");
+        App.navigate("admin");
+      },
+
+      deleteThaliItem(catKey, itemId) {
+        if (!confirm("Are you sure you want to delete this item from custom thali?")) return;
+        const updatedOptions = { ...THALI_OPTIONS };
+        if (updatedOptions[catKey]) {
+          updatedOptions[catKey] = updatedOptions[catKey].filter(i => i.id !== itemId);
+        }
+        saveThaliData(updatedOptions);
+        showToast("Thali item deleted!");
+        App.navigate("admin");
+      },
+
+      resetThaliToDefault() {
+        if (!confirm("Reset custom thali items to factory defaults?")) return;
+        saveThaliData(DEFAULT_THALI_OPTIONS);
+        showToast("Thali reset to defaults!");
+        App.navigate("admin");
+      },
+
+      openLoginModal(onSuccessNav) {
+        const modal = document.getElementById("modal-container");
+        modal.innerHTML = `
+          <div class="bg-neutral-900 border border-gold-500/40 rounded-2xl p-5 w-full max-w-xs text-white my-auto shadow-2xl">
+            <h3 class="font-bold text-base mb-1 text-yellow-400 text-center">Customer Login</h3>
+            <p class="text-[11px] text-stone-400 text-center mb-4">Instant phone login.</p>
+            
+            <div class="space-y-3 mb-4">
+              <div>
+                <label class="block text-[10px] text-yellow-400 uppercase font-bold mb-1">Your Name</label>
+                <input type="text" id="login-name-input" placeholder="e.g. Rahul" value="${state.customerName}" 
+                       class="w-full text-xs px-3 py-2 rounded-xl focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-[10px] text-yellow-400 uppercase font-bold mb-1">Phone Number (10 Digits)</label>
+                <input type="tel" id="login-phone-input" placeholder="e.g. 9876543210" maxlength="10" value="${state.customerPhone}" 
+                       class="w-full text-xs px-3 py-2 rounded-xl focus:outline-none" />
+              </div>
+            </div>
+
+            <button onclick="App.saveLogin('${onSuccessNav || ''}')" class="w-full bg-gold-500 text-black py-2.5 rounded-xl text-xs font-bold mb-2">
+              Save & Continue
+            </button>
+            <button onclick="App.closeModal()" class="w-full text-center text-xs text-stone-400 py-1">Cancel</button>
+          </div>
+        `;
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      },
+
+      saveLogin(onSuccessNav) {
+        const phoneInput = document.getElementById("login-phone-input");
+        const nameInput = document.getElementById("login-name-input");
+        const phone = (phoneInput.value || "").trim().replace(/[^0-9]/g, "");
+        const name = (nameInput.value || "").trim();
+
+        if (phone.length < 10) {
+          showToast("Please enter a valid 10-digit number");
+          return;
+        }
+
+        state.customerPhone = phone;
+        state.customerName = name || "Guest";
+        localStorage.setItem("muskan_user_phone", state.customerPhone);
+        localStorage.setItem("muskan_user_name", state.customerName);
+
+        App.closeModal();
+        updateProfileUI();
+        showToast("Logged in as " + state.customerPhone);
+
+        if (onSuccessNav) App.navigate(onSuccessNav);
+        else App.navigate(state.screen);
+      },
+
+      logout() {
+        localStorage.removeItem("muskan_user_phone");
+        localStorage.removeItem("muskan_user_name");
+        state.customerPhone = '';
+        state.customerName = '';
+        updateProfileUI();
+        showToast("Logged out");
+        App.navigate("home");
+      },
+
+      closeModal() {
+        const modal = document.getElementById("modal-container");
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      },
+
+      proceedToCheckout() {
+        if (!state.customerPhone) {
+          App.openLoginModal('payment');
+          return;
+        }
+        App.navigate('payment');
+      },
+
+      handleSearch(q) {
+        state.searchQuery = q;
+        const main = document.getElementById("main-content");
+        if (state.screen === 'menu') main.innerHTML = renderMenu();
+      },
+
+      setFilter(type) {
+        state.activeFilter = type;
+        const main = document.getElementById("main-content");
+        if (state.screen === 'menu') main.innerHTML = renderMenu();
+      },
+
+      addToCart(id) {
+        const item = MENU.find(m => m.id === id);
+        if (!item || item.available === false) return;
+        const existing = state.cart.find(c => c.id === id && !c.custom);
+        if (existing) existing.qty++;
+        else state.cart.push({ ...item, qty: 1, name: item.name });
+        updateCartUI();
+        showToast("Added to cart ✓");
+      },
+
+      addHalf(id) {
+        const item = MENU.find(m => m.id === id);
+        if (!item || !item.halfPrice || item.available === false) return;
+        const halfName = item.name + " (Half)";
+        const existing = state.cart.find(c => c.id === id + "-half");
+        if (existing) existing.qty++;
+        else state.cart.push({ id: id + "-half", name: halfName, price: item.halfPrice, qty: 1, img: item.img, veg: item.veg });
+        updateCartUI();
+        showToast("Half plate added ✓");
+      },
+
+      updateQty(idx, delta) {
+        state.cart[idx].qty += delta;
+        if (state.cart[idx].qty <= 0) state.cart.splice(idx, 1);
+        App.navigate("cart");
+      },
+
+      selectThaliItem(category, id) {
+        const options = THALI_OPTIONS[category];
+        const item = options.find(o => o.id === id);
+        if (!item || item.available === false) return;
+        if (category === "sides") {
+          const idx = state.thali.sides.findIndex(s => s.id === id);
+          if (idx >= 0) state.thali.sides.splice(idx, 1);
+          else state.thali.sides.push(item);
+        } else {
+          state.thali[category] = state.thali[category]?.id === id ? null : item;
+        }
+        App.navigate("thali");
+      },
+
+      applyPreset(presetId) {
+        const preset = THALI_PRESETS.find(p => p.id === presetId);
+        if (!preset) return;
+        state.thali = { rice: null, bread: null, dal: null, sabzi: null, protein: null, sides: [], dessert: null };
+        preset.items.forEach(id => {
+          for (const [cat, opts] of Object.entries(THALI_OPTIONS)) {
+            const found = opts.find(o => o.id === id);
+            if (found && found.available !== false) {
+              if (cat === "sides") state.thali.sides.push(found);
+              else state.thali[cat] = found;
+              break;
+            }
+          }
+        });
+        App.navigate("thali");
+        showToast("Preset applied");
+      },
+
+      addThaliToCart() {
+        const { total } = thaliTotal();
+        if (total === 0) return;
+        const parts = [];
+        ["rice", "bread", "dal", "sabzi", "protein", "dessert"].forEach(k => {
+          if (state.thali[k]) parts.push(state.thali[k].name);
+        });
+        state.thali.sides.forEach(s => parts.push(s.name));
+        state.cart.push({
+          id: "custom-thali-" + Date.now(),
+          name: "Custom Thali",
+          price: total,
+          qty: 1,
+          img: state.thali.protein?.img || "https://images.unsplash.com/photo-1546833999-b9f581a1996d?w=400&fit=crop",
+          custom: parts.join(", "),
+          veg: !state.thali.protein || state.thali.protein.veg !== false
+        });
+        state.thali = { rice: null, bread: null, dal: null, sabzi: null, protein: null, sides: [], dessert: null };
+        updateCartUI();
+        showToast("Thali added to cart!");
+        App.navigate("cart");
+      },
+
+      selectPayment(method) {
+        state.paymentMethod = method;
+        App.navigate("payment");
+      },
+
+      directAppPay(method) {
+        if (!state.customerPhone) {
+          App.openLoginModal('payment');
+          return;
+        }
+        var total = cartTotal();
+        state.paymentMethod = method;
+        tryOpenSpecificUpi(method, total);
+        setTimeout(function() {
+          App.executeOrderPlacement(method, total);
+        }, 3000);
+      },
+
+      executeOrderPlacement(method, total) {
+        state.order = {
+          id: "HM" + Math.floor(1000 + Math.random() * 9000),
+          items: state.cart.slice(),
+          notes: state.cookingNotes || "",
+          tip: state.tipAmount || 0,
+          total: total,
+          table: state.table,
+          customerPhone: state.customerPhone,
+          customerName: state.customerName,
+          time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }),
+          payment: method,
+          status: 0
+        };
+        saveOrder(state.order);
+
+        // ================= FIREBASE FIRESTORE SYNC CALL =================
+        if (typeof window.pushOrderToFirestore === "function") {
+          window.pushOrderToFirestore(state.order);
+        }
+
+        state.cart = [];
+        state.cookingNotes = '';
+        state.tipAmount = 0;
+        state.paymentMethod = null;
+        updateCartUI();
+        App.navigate("order");
+        showToast("Order placed!");
+
+        triggerAdminNotification("📦 New Order Received!", "Table " + state.order.table + " placed order " + state.order.id + " for ₹" + state.order.total);
+
+        [1,2,3,4,5].forEach(function(status, i) {
+          setTimeout(function() {
+            if (state.order) {
+              state.orderStatus = status;
+              updateStoredOrder(state.order.id, { status: status });
+              if (state.screen === "order") App.navigate("order");
+              if (status === 5) showToast("Food served! Enjoy your meal");
+            }
+          }, (i + 1) * 7000);
+        });
+      },
+
+      confirmPayment() {
+        if (!state.customerPhone) {
+          App.openLoginModal('payment');
+          return;
+        }
+        if (!state.paymentMethod || state.cart.length === 0) return;
+        var total = cartTotal();
+
+        if (["phonepe", "gpay", "paytm", "navi", "upi"].includes(state.paymentMethod)) {
+          tryOpenSpecificUpi(state.paymentMethod, total);
+          setTimeout(function() {
+            App.executeOrderPlacement(state.paymentMethod, total);
+          }, 2500);
+          return;
+        }
+
+        showToast("Placing order...");
+        setTimeout(function() {
+          App.executeOrderPlacement(state.paymentMethod, total);
+        }, 1000);
+      },
+
+      sendWhatsAppWithImage(orderId) {
+        var orders = loadOrders();
+        var o = orders.find(x => x.id === orderId) || state.order;
+        if (!o) return;
+        sendBillWithImageToWhatsApp(o);
+      },
+
+      downloadBillImage() {
+        var element = document.getElementById("printable-receipt");
+        if (!element) return;
+        showToast("Generating Bill Image...");
+        html2canvas(element, { scale: 2, backgroundColor: "#fffef8" }).then(function(canvas) {
+          var link = document.createElement("a");
+          link.download = "Hotel_Muskan_Bill_" + Date.now() + ".png";
+          link.href = canvas.toDataURL("image/png");
+          link.click();
+          showToast("Bill Image Saved!");
+        }).catch(function(err) {
+          console.error(err);
+          showToast("Error creating image");
+        });
+      },
+
+      printPaperReceipt(orderId) {
+        const orders = loadOrders();
+        const o = orders.find(x => x.id === orderId) || state.order;
+        if (!o) return;
+        const modal = document.getElementById("modal-container");
+        modal.innerHTML = `
+          <div class="w-full max-w-xs my-auto">
+            <div id="printable-receipt">
+              ${createReceiptHtml(o)}
+            </div>
+
+            <div class="space-y-2 mt-3">
+              <button onclick="App.downloadBillImage()" class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-bold text-xs flex items-center justify-center gap-1">
+                📷 Save Bill as Image (PNG)
+              </button>
+              <button onclick="window.print()" class="w-full bg-neutral-800 border border-yellow-500/40 text-yellow-400 py-2 rounded-xl font-bold text-[11px]">PRINT</button>
+              <button onclick="App.closeModal()" class="w-full text-center text-xs py-1 text-stone-400 underline">Close</button>
+            </div>
+          </div>
+        `;
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      },
+
+      simulateQR() {
+        const modal = document.getElementById("modal-container");
+        modal.innerHTML = `
+          <div class="bg-neutral-900 border border-gold-500/40 rounded-2xl p-5 w-full max-w-xs text-white text-center my-auto">
+            <h3 class="font-bold text-sm mb-2 text-yellow-400">Select Active Table</h3>
+            <div class="grid grid-cols-4 gap-2 mb-4">
+              ${TABLES.slice(0, 12).map(tbl => `
+                <button onclick="App.setTable('${tbl.id}')" class="p-2 rounded-xl text-xs font-bold border ${state.table === tbl.id ? 'bg-gold-500 text-black' : 'bg-neutral-800 border-yellow-500/20'}">${tbl.id.replace('TABLE-','')}</button>
+              `).join('')}
+            </div>
+            <button onclick="App.closeModal()" class="w-full py-2 bg-neutral-800 rounded-xl text-xs">Cancel</button>
+          </div>
+        `;
+        modal.classList.remove("hidden");
+        modal.classList.add("flex");
+      },
+
+      setTable(tblId) {
+        state.table = tblId;
+        document.getElementById("table-display-pill").textContent = tblId;
+        App.closeModal();
+        showToast("Connected to " + tblId);
+        App.navigate(state.screen);
+      },
+
+      clearCart() {
+        state.cart = [];
+        state.cookingNotes = '';
+        state.tipAmount = 0;
+        updateCartUI();
+        App.navigate("cart");
+        showToast("Cart cleared");
+      },
+
+      randomThali() {
+        var picks = {};
+        ["rice", "bread", "dal", "sabzi", "protein", "dessert"].forEach(function(k) {
+          var opts = (THALI_OPTIONS[k] || []).filter(function(o) { return o.price > 0 && o.available !== false; });
+          if (opts.length) picks[k] = opts[Math.floor(Math.random() * opts.length)];
+        });
+        state.thali = {
+          rice: picks.rice || null,
+          bread: picks.bread || null,
+          dal: picks.dal || null,
+          sabzi: picks.sabzi || null,
+          protein: picks.protein || null,
+          sides: [],
+          dessert: picks.dessert || null
+        };
+        App.navigate("thali");
+        showToast("🎲 Surprise Thali ready!");
+      },
+
+      requestWater() { 
+        var req = {
+          id: "REQ-" + Date.now(),
+          type: "water",
+          table: state.table,
+          time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+        };
+        saveServiceRequest(req);
+        triggerAdminNotification("💧 Water Requested!", "Guest at " + state.table + " requested drinking water.");
+        showToast("💧 Water requested — waiter notified"); 
+      },
+
+      requestWaiter() { 
+        var req = {
+          id: "REQ-" + Date.now(),
+          type: "waiter",
+          table: state.table,
+          time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+        };
+        saveServiceRequest(req);
+        triggerAdminNotification("🙋 Waiter Called!", "Guest at " + state.table + " is calling for assistance.");
+        showToast("🙋 Waiter called to your table"); 
+      },
+
+      completeServiceRequest(reqId) {
+        var reqs = loadServiceRequests().filter(r => r.id !== reqId);
+        localStorage.setItem("muskan_service_requests", JSON.stringify(reqs));
+        showToast("Request resolved ✓");
+        App.navigate("admin");
+      },
+
+      clearServiceRequests() {
+        localStorage.setItem("muskan_service_requests", "[]");
+        showToast("All calls cleared");
+        App.navigate("admin");
+      },
+
+      openAdmin() {
+        var pin = prompt("Admin PIN", "");
+        if (pin === null) return;
+        if (pin !== "1234" && pin !== "muskan") {
+          showToast("Wrong PIN");
+          return;
+        }
+        App.navigate("admin");
+      },
+
+      adminSetStatus(orderId, statusNum) {
+        state.orderStatus = statusNum;
+        updateStoredOrder(orderId, { status: statusNum });
+        if (state.order && state.order.id === orderId) state.orderStatus = statusNum;
+        showToast("Status updated");
+        App.navigate("admin");
+      },
+
+      adminClearOrders() {
+        if (!confirm("Clear all orders?")) return;
+        localStorage.setItem("muskan_orders", "[]");
+        showToast("Orders cleared");
+        App.navigate("admin");
+      }
+    };
+
+    // ========== INIT ==========
+    try {
+      var cartBtn = document.getElementById("floating-cart");
+      if (cartBtn) cartBtn.addEventListener("click", function() { App.navigate("cart"); });
+      document.querySelectorAll(".nav-btn").forEach(function(btn) {
+        btn.addEventListener("click", function() { App.navigate(btn.dataset.screen); });
+      });
+    } catch (e) { console.error(e); }
+
+    // Start App Flow: Loading -> Login -> Main Screen
+    App.initAppFlow();
+  })();
+  </script>
+</body>
+</html>
